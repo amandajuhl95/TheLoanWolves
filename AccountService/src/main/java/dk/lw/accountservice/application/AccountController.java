@@ -5,12 +5,10 @@ import dk.lw.accountservice.DTO.TransactionDTO;
 import dk.lw.accountservice.domain.Account;
 import dk.lw.accountservice.domain.AccountType;
 import dk.lw.accountservice.domain.Transaction;
-import dk.lw.accountservice.domain.TransactionType;
 import dk.lw.accountservice.errorhandling.InvalidTransactionException;
 import dk.lw.accountservice.errorhandling.NotAllowedException;
 import dk.lw.accountservice.errorhandling.NotFoundException;
 import dk.lw.accountservice.infrastructure.AccountRepository;
-import org.apache.catalina.filters.RemoteIpFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,17 +25,21 @@ public class AccountController {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private LoggingProducer producer;
+
     @PostMapping("/new/{type}/{userId}")
     public AccountDTO createAccount(@PathVariable @Valid UUID userId, @PathVariable @Valid AccountType type) {
         Account account = new Account(userId, type);
-        account = accountRepository.save(account);
+        String error = "The test have worked";
+        producer.sendLogs("AccountService", error, 400);
+        //account = accountRepository.save(account);
         return new AccountDTO(account);
     }
 
     @PostMapping("/{userId}/{accountId}")
     public AccountDTO transaction(@PathVariable UUID userId, @PathVariable UUID accountId, @RequestBody @Valid TransactionDTO transactionDTO) throws InvalidTransactionException, NotFoundException {
         Optional<Account> optAccount = accountRepository.findById(accountId);
-
         if(optAccount.isPresent())
         {
             Account account = optAccount.get();
@@ -48,11 +50,17 @@ public class AccountController {
                     account = accountRepository.save(account);
                     return new AccountDTO(account);
                 }
-                throw new InvalidTransactionException("The account balance is too low to perform transaction");
+                String error = "The account balance is too low to perform transaction";
+                producer.sendLogs("AccountService", error, 400);
+                throw new InvalidTransactionException(error);
             }
-            throw new InvalidTransactionException("User does not own this account");
+            String error = "User does not own this account";
+            producer.sendLogs("AccountService", error, 400);
+            throw new InvalidTransactionException(error);
         }
-        throw new NotFoundException("Account: " + accountId + " not found");
+        String error = "Account: " + accountId + " not found";
+        producer.sendLogs("AccountService", error, 404);
+        throw new NotFoundException(error);
     }
 
     @GetMapping("/{userId}/{accountId}")
