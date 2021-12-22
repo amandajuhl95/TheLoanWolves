@@ -20,7 +20,7 @@ public class AccountDTO {
     private double balance;
     private AccountType type;
 
-    private List<TransactionDTO> transactions = new ArrayList<>();
+    private List<AccountTransactionDTO> transactions = new ArrayList<>();
 
     public AccountDTO(Account account) {
         this.id = account.getId();
@@ -29,7 +29,7 @@ public class AccountDTO {
         this.type = account.getType();
 
         for(Transaction transaction : account.getTransactions()) {
-            transactions.add(new TransactionDTO(transaction));
+            transactions.add(new AccountTransactionDTO(transaction));
         }
     }
 }
