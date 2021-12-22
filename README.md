@@ -9,7 +9,7 @@ docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/TheLoanWolves/LoginService/dat
 ```
 For LoanAmortizationService 
 ```
-docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/TheLoanWolves/LoanAmortization/data:/h2-data" --name h2-loan -d -p 9093:9092 -p 8083:8082 buildo/h2database
+docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/TheLoanWolves/LoanAmortizationService/data:/h2-data" --name h2-loan -d -p 9093:9092 -p 8083:8082 buildo/h2database
 ```
 For AccountService
 ```
