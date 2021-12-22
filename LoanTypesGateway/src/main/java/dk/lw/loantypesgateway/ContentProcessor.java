@@ -58,7 +58,7 @@ public class ContentProcessor implements Processor
             csv.append(loanType.getMax_limit() + ";");
             csv.append(loanType.getInterest_rate() + ";");
             csv.append(loanType.getFee() + ";");
-            csv.append(loanType.getDuration()+ ";\n");
+            csv.append(loanType.getDuration()+ "\r");
         }
         return csv.toString();
     }

@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "label": "Approved by system or employee",
+      "type": "textfield",
+      "id": "Field_1s17tt1",
+      "key": "Liable",
+      "description": "It is set to \"True\" if internal bank system accepted the loan, otherwise it's \"False\". Lookover the information and change to \"True\" or \"False\" if you think the person is liable or not. ",
+      "validate": {}
+    },
+    {
+      "label": "price of the loan",
+      "type": "textfield",
+      "id": "Field_Price1231",
+      "key": "Fee",
+      "description": "the price of the loan",
+      "validate": {}
+    },
+    {
+      "label": "Interest rate of the loan",
+      "type": "textfield",
+      "id": "Field_Interest3242",
+      "key": "InterestRate",
+      "description": "the Interest of the loan",
+      "validate": {}
+    },
+    {
+      "label": "FullName",
+      "type": "textfield",
+      "id": "Field_0lm9wf6",
+      "key": "FullName",
+      "description": "What is your name?",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Age",
+      "type": "number",
+      "id": "Field_1197rtl",
+      "key": "Age",
+      "validate": {
+        "required": true,
+        "min": 12
+      },
+      "description": "How old are you?"
+    },
+    {
+      "label": "Salary",
+      "type": "number",
+      "id": "Field_18uq1xi",
+      "key": "Salary",
+      "description": "What is your current income pr month?"
+    },
+    {
+      "label": "Email",
+      "type": "textfield",
+      "id": "Field_0rjqchn",
+      "key": "Email",
+      "description": "What is your email address?"
+    },
+    {
+      "label": "CPR",
+      "type": "textfield",
+      "id": "Field_0f0cdhg",
+      "key": "CPR",
+      "description": "What is your CPR number"
+    },
+    {
+      "label": "User ID",
+      "type": "textfield",
+      "id": "Field_0a126vm",
+      "key": "UserId",
+      "description": "What is your user ID"
+    },
+    {
+      "label": "Amount",
+      "type": "number",
+      "id": "Field_0dg7qox",
+      "key": "Amount",
+      "validate": {
+        "required": true,
+        "min": 500
+      },
+      "description": "How much money would you like to borrow?"
+    },
+    {
+      "label": "Address",
+      "type": "textfield",
+      "id": "Field_041vxwk",
+      "key": "Address",
+      "description": "Where do you live"
+    },
+    {
+      "action": "submit",
+      "label": "Submit",
+      "type": "button",
+      "id": "Field_1it3sqm",
+      "key": "field_0m4zhpx"
+    }
+  ],
+  "type": "default",
+  "id": "Form_0rsw10a"
+}

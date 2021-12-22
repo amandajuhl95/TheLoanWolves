@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "label": "Full name",
+      "type": "textfield",
+      "id": "Field_0lm9wf6",
+      "key": "FullName",
+      "description": "What is your full name?",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Age",
+      "type": "number",
+      "id": "Field_1197rtl",
+      "key": "Age",
+      "validate": {
+        "required": true,
+        "min": 12
+      },
+      "description": "How old are you?"
+    },
+    {
+      "label": "Email",
+      "type": "textfield",
+      "id": "Field_0rjqchn",
+      "key": "Email",
+      "description": "What is your email address?",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "CPR",
+      "type": "textfield",
+      "id": "Field_0f0cdhg",
+      "key": "CPR",
+      "validate": {
+        "required": true
+      },
+      "description": "What is your CPR number"
+    },
+    {
+      "label": "User ID",
+      "type": "textfield",
+      "id": "Field_0a126vm",
+      "key": "UserId",
+      "description": "What is your user ID"
+    },
+    {
+      "label": "Salary",
+      "type": "number",
+      "id": "Field_18uq1xi",
+      "key": "Salary",
+      "description": "What is your current income pr month?"
+    },
+    {
+      "label": "Amount",
+      "type": "number",
+      "id": "Field_0dg7qox",
+      "key": "Amount",
+      "validate": {
+        "required": true,
+        "min": 500
+      },
+      "description": "How much money would you like to borrow?"
+    },
+    {
+      "label": "Address",
+      "type": "textfield",
+      "id": "Field_041vxwk",
+      "key": "Address",
+      "description": "Where do you live"
+    },
+    {
+      "label": "Have Loan",
+      "type": "textfield",
+      "id": "Field_1ddnfx9",
+      "key": "Have_loan",
+      "description": "Do you currently owe money to us or another bank??"
+    },
+    {
+      "action": "submit",
+      "label": "Submit",
+      "type": "button",
+      "id": "Field_1it3sqm",
+      "key": "field_0m4zhpx"
+    }
+  ],
+  "type": "default",
+  "id": "Form_18uhzoz"
+}

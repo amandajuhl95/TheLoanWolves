@@ -1,0 +1,53 @@
+Loan Agreement
+
+This Loan Agreement (this “Agreement”), is executed as of {} (the “Effective Date”)
+
+by and between
+
+{}, located at {}, hereinafter referred to as
+the “Borrower” which expression unless repugnant to the context shall mean and includes its
+legal representatives, assignee, nominee(s) and administrator;
+
+and
+
+LoanWolfs, hereinafter referred to as the
+“Lender” which expression unless repugnant to the context shall mean and includes its legal
+representatives, assignee, nominee(s) and administrator;
+
+WHEREAS at the request of the Borrower, the Lender has agreed to grant a Loan not exceeding
+a sum of {} to the Borrower for a period of {} years on
+terms and conditions hereinafter contained.
+
+
+The parties agree as follows:
+
+1. Loan Amount: The Lender agrees to loan the Borrower the principal sum of
+{}, together with interest on the outstanding principal amount
+of the Loan (the "Principal Balance"), and in accordance with the terms set forth below.
+
+2. Interest: The Principal Balance shall bear interest at the rate of {}% per annum, accruing
+daily. Not withstanding, the total interest charged shall not exceed the maximum amount allowed
+by law and the Borrower shall not be obligated to pay any interest in excess of such amount.
+
+3. Guarantee: Guarantor’s Full Name, located at Guarantor’s Complete Address (the
+“Guarantor”) promises to unconditionally guarantee to the Lender, the full payment and
+performance by Borrower of all duties and obligations arising under this Agreement. The
+Guarantor agrees that this guarantee shall remain in full force and effect and be binding on the
+Guarantor until this Agreement is satisfied.
+4. Prepayment: The Borrower has the right to prepay all or any part of the Loan, together with
+accrued and unpaid interest thereon, at any time without prepayment penalty or premium of any
+kind.
+5. Costs and Expenses: Borrower shall pay to the Lender all costs of collection, including
+reasonable attorney's fees of {}, the Lender incurs in enforcing this Agreement.
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the date first stated
+above.
+
+
+SIGNATURES
+
+Borrower’s Signature ________________________     Borrower’s Full Name ________________________
+
+Guarantor’s Signature ________________________    Guarantor’s Full Name ________________________
+
+Lender’s Signature ________________________       Lender’s Full Name ________________________

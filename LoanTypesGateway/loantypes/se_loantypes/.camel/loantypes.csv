@@ -1,0 +1,5 @@
+﻿type;min_limit;max_limit;interest_rate;fee;Duration
+Quick;0;10000;4.2;100;2
+Basic;10000;50000;3;2000;8
+Asset;50000;100000;1;15000;12
+Big;100000;2000000;0.5;35000;25

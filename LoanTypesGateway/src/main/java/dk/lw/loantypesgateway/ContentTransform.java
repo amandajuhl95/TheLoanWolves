@@ -4,8 +4,8 @@ import org.apache.camel.builder.RouteBuilder;
 
 public class ContentTransform extends RouteBuilder
 {
-    private static final String SOURCE  = "C:/Users/benja/OneDrive/Skrivebord/SI Big Project/camel/Test_se_csvfile/";
-    private static final String DESTINATION1  = "C:/Users/benja/OneDrive/Skrivebord/SI Big Project/camel/Test_dk_csvfile/";
+    private static final String SOURCE  = "loantypes/se_loantypes/";
+    private static final String DESTINATION1  = "loantypes/dk_loantypes/";
 
     @Override
     public void configure() throws Exception
