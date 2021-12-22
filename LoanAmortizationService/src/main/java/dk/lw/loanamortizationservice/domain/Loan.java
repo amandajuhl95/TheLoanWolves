@@ -17,9 +17,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Loan {
+
     @Id
-    @Column(name = "id", nullable = false)
-    private UUID id, userId;
+    private UUID id;
+    private UUID userId;
     private String startDate, endDate;
     private double amount, principal, interestRate;
 

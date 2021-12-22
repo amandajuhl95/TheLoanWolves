@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dk.lw</groupId>
-    <artifactId>LoanAmotizationService</artifactId>
+    <artifactId>LoanAmortizationService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>LoanAmotizationService</name>
-    <description>LoanAmotizationService</description>
+    <name>LoanAmortizationService</name>
+    <description>LoanAmortizationService</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -42,6 +42,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka-test</artifactId>

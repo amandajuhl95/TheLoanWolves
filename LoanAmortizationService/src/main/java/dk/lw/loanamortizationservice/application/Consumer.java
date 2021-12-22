@@ -7,7 +7,6 @@ import dk.lw.loanamortizationservice.DTO.LoanDTO;
 import dk.lw.loanamortizationservice.domain.Amortization;
 import dk.lw.loanamortizationservice.domain.Loan;
 import dk.lw.loanamortizationservice.domain.LoanQuote;
-import dk.lw.loanamortizationservice.infrastructure.AmortizationRepository;
 import dk.lw.loanamortizationservice.infrastructure.LoanQuoteRepository;
 import dk.lw.loanamortizationservice.infrastructure.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,6 @@ import java.util.Optional;
 public class Consumer {
 
     private final Gson gson = new Gson();
-
-    @Autowired
-    private AmortizationRepository amortizationRepository;
 
     @Autowired
     private LoanRepository loanRepository;
