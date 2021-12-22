@@ -25,3 +25,11 @@ docker run -d --name camunda -p 8080:8080 camunda/camunda-bpm-platform:latest
 ```
  
 Go to [Camunda Dashboard](http://localhost:8080/camunda/app/cockpit/default/#/dashboard) to check tha Camunda is running. 
+
+#### To make docker container for Kafka, run in the root of the downloaded project:
+```
+curl -sSL https://raw.githubusercontent.com/bitnami/bitnami-docker-kafka/master/docker-compose.yml > docker-compose.yml
+```
+```
+docker-compose up -d
+```
