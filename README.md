@@ -33,3 +33,6 @@ curl -sSL https://raw.githubusercontent.com/bitnami/bitnami-docker-kafka/master/
 ```
 docker-compose up -d
 ```
+
+Check in Docker that a container with a zookeeper and kafka is running. 
+Next open OffSet Explorer 2 and add a connection to the created docker container.
