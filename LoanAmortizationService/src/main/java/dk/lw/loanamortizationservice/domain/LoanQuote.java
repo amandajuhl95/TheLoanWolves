@@ -16,7 +16,8 @@ import java.util.UUID;
 public class LoanQuote {
 
     @Id
-    private UUID id, userId;
+    private UUID id;
+    private UUID userId;
     private double amount, fee, interestRate;
     private int duration;
 

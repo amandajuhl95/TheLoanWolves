@@ -8,14 +8,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@Service
 public class LoanQuoteClient {
 
-    public void requestLoanQuote(LoanRequestDTO loanRequestDTO) throws IOException {
+    public static void requestLoanQuote(LoanRequestDTO loanRequestDTO) throws IOException {
 
-        String task = "";
+        try {
+        String task = "636aa055-6348-11ec-a70d-0242ac110003";
 
-        URL url = new URL("http://localhost:8080/engine-rest/process-definition/" + task + "/start" );
+        URL url = new URL("http://localhost:8080/engine-rest/process-definition/" + task + "/start");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -49,6 +49,8 @@ public class LoanQuoteClient {
         try(OutputStream os = con.getOutputStream()) {
             byte[] input = jsonInputString.getBytes("utf-8");
             os.write(input, 0, input.length);
+        } } catch(IOException e) {
+            throw new IOException();
         }
     }
 }
