@@ -10,10 +10,13 @@ import dk.lw.accountservice.errorhandling.InvalidTransactionException;
 import dk.lw.accountservice.errorhandling.NotAllowedException;
 import dk.lw.accountservice.errorhandling.NotFoundException;
 import dk.lw.accountservice.infrastructure.AccountRepository;
+import org.apache.catalina.filters.RemoteIpFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -64,5 +67,16 @@ public class AccountController {
             throw new NotAllowedException("User does not own this account");
         }
         throw new NotFoundException("Account: " + accountId + " not found");
+    }
+
+    @GetMapping("/{userId}")
+    public List<AccountDTO> getAccounts(@PathVariable @Valid UUID userId) throws NotAllowedException, NotFoundException {
+        List<Account> accounts = accountRepository.findByUserId(userId);
+        List<AccountDTO> accountDTOs = new ArrayList<>();
+
+        for (Account account : accounts) {
+            accountDTOs.add(new AccountDTO(account));
+        }
+        return accountDTOs;
     }
 }
