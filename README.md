@@ -34,12 +34,12 @@ curl -sSL https://raw.githubusercontent.com/bitnami/bitnami-docker-kafka/master/
 docker-compose up -d
 ```
 
-Check in Docker that a container with a zookeeper and kafka is running. 
-Next open OffSet Explorer 2 and add a connection to the created docker container.
+1. Check in Docker that a container with a zookeeper and kafka is running. 
+2. Next open OffSet Explorer 2 and add a connection to the created docker container.
 
-Download Camunda Modeler.
-
-With Homebrew 
+3. Download Camunda Modeler.
+ 
+With HomeBrew:
 ```
 brew install --cask camunda-modeler
 ```
