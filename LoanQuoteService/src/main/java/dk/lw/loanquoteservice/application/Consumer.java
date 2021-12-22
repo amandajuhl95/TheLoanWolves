@@ -1,6 +1,7 @@
 package dk.lw.loanquoteservice.application;
 
 import com.google.gson.Gson;
+import dk.lw.loanquoteservice.DTO.LoanQuoteDTO;
 import dk.lw.loanquoteservice.domain.LoanQuote;
 import dk.lw.loanquoteservice.infrastructure.LoanQuoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ public class Consumer {
     @KafkaListener(topics = "save-loan-quote")
     public void consumeLoanQuote(String request)
     {
-        LoanQuote loanQuote = gson.fromJson(request, LoanQuote.class);
+        LoanQuoteDTO loanQuoteDTO = gson.fromJson(request, LoanQuoteDTO.class);
+        LoanQuote loanQuote = new LoanQuote(loanQuoteDTO);
         loanQuoteRepository.save(loanQuote);
     }
 }

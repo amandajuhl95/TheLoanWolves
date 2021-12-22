@@ -1,5 +1,6 @@
 package dk.lw.loanquoteservice.domain;
 
+import dk.lw.loanquoteservice.DTO.LoanQuoteDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,13 @@ public class LoanQuote {
     private double amount, fee, interestRate;
     private int duration;
 
+    public LoanQuote(LoanQuoteDTO loanQuoteDTO) {
+        this.id = UUID.randomUUID();
+        this.userId = loanQuoteDTO.getUserId();
+        this.cpr = loanQuoteDTO.getCpr();
+        this.amount = loanQuoteDTO.getAmount();
+        this.fee = loanQuoteDTO.getFee();
+        this.interestRate = loanQuoteDTO.getInterestRate();
+        this.duration = loanQuoteDTO.getDuration();
+    }
 }
