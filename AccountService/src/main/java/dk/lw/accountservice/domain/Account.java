@@ -1,7 +1,9 @@
 package dk.lw.accountservice.domain;
 
+import dk.lw.accountservice.DTO.AmortizationDTO;
 import dk.lw.accountservice.DTO.TransactionDTO;
 import lombok.Data;
+import org.apache.catalina.filters.RemoteIpFilter;
 
 
 import javax.persistence.CascadeType;
@@ -21,7 +23,7 @@ public class Account {
     private double balance;
     private AccountType type;
 
-    @OneToMany(mappedBy = "account", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "account", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Transaction> transactions = new ArrayList<>();
 
     public Account(UUID userId, AccountType type) {
@@ -47,5 +49,9 @@ public class Account {
             this.transactions.add(transaction);
         }
         return transaction;
+    }
+
+    public void deposit(double amount) {
+        this.balance += amount;
     }
 }
