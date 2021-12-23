@@ -107,9 +107,13 @@ type = SAVINGS, SALARY, PAYMENT or DEBIT
 ```
 @RequestBody {"user": {"fullName":String, "email":String, "cpr":String, "age":Integer, "salary":Double, "address": {"street":String, "number":String, "zipcode":Integer, "city":String}}, "amount":Double} 
 ```
- 
 
+10. Accept loan[POST]: /accept/{userId}/{loanQuoteId}
 
+11. Make amortization[POST]: /amortization/{loanId}
+```
+@RequestBody {"transactionId":UUID, "amount":Double} 
+```
 
  
 
