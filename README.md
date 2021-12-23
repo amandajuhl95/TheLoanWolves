@@ -99,28 +99,28 @@ localhost:8070/loan-wolves
 cpr = 11 characters (eg. "101099-1234")
 ```
 
-5. Create Account[POST]: /new/{type}/{userId}
+5. Create Account[POST]: /new/account/{type}/{userId}
 ```
 type = SAVINGS, SALARY, PAYMENT or DEBIT
 ```
 
-6. Make transaction[POST]: /{userId}/{accountId}
+6. Retrieve one Account[GET]: /account/{userId}/{accountId}
+
+7. Retrieve all Accounts[GET]: /account/{userId}
+
+8. Make transaction[POST]: /account/transaction/{userId}/{accountId}
 ```
 @RequestBody {"amount":Double, "type":type} 
 ```
 
-7. Retrieve one transaction[GET]: /{userId}/{accountId}
-
-8. Retrieve all transactions[GET]: /{userId}
-
-9. Request loan[POST]: /request
+9. Request loan[POST]: /loan/request
 ```
 @RequestBody {"user": {"fullName":String, "email":String, "cpr":String, "age":Integer, "salary":Double, "address": {"street":String, "number":String, "zipcode":Integer, "city":String}}, "amount":Double} 
 ```
 
-10. Accept loan[POST]: /accept/{userId}/{loanQuoteId}
+10. Accept loan[POST]: /loan/accept/{userId}/{loanQuoteId}
 
-11. Make amortization[POST]: /amortization/{loanId}
+11. Make amortization[POST]: /loan/amortization/{loanId}
 ```
 @RequestBody {"transactionId":UUID, "amount":Double} 
 ```
