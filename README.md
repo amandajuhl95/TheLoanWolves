@@ -89,7 +89,7 @@ localhost:8070/loan-wolves
 cpr = 11 characters (eg. "101099-1234")
 ```
 
-5.. Create Account[POST]: /new/{type}/{userId}
+5. Create Account[POST]: /new/{type}/{userId}
 ```
 type = SAVINGS, SALARY, PAYMENT or DEBIT
 ```
