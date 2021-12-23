@@ -31,9 +31,7 @@ public class AccountController {
     @PostMapping("/new/{type}/{userId}")
     public AccountDTO createAccount(@PathVariable @Valid UUID userId, @PathVariable @Valid AccountType type) {
         Account account = new Account(userId, type);
-        String error = "The test have worked";
-        producer.sendLogs("AccountService", error, 400);
-        //account = accountRepository.save(account);
+        account = accountRepository.save(account);
         return new AccountDTO(account);
     }
 
