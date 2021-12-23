@@ -115,5 +115,9 @@ type = SAVINGS, SALARY, PAYMENT or DEBIT
 @RequestBody {"transactionId":UUID, "amount":Double} 
 ```
 
- 
+![](https://github.com/amalielandt/TheLoanWolves/blob/main/diagrams/camunda_diagram.png)
+
+![](https://github.com/amalielandt/TheLoanWolves/blob/main/diagrams/legacy_setup.PNG)
+
+![](https://github.com/amalielandt/TheLoanWolves/blob/main/diagrams/new_setup.PNG)
 
