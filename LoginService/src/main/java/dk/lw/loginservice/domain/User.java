@@ -96,7 +96,7 @@ public class User {
 
         String jwtToken = Jwts.builder()
                 .claim("name", fullName)
-                .claim("id", id)
+                .claim("userId", id)
                 .claim("type", type.toString())
                 .setSubject(id.toString())
                 .setId(UUID.randomUUID().toString())

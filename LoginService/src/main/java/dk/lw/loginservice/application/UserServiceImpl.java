@@ -10,6 +10,8 @@ import stubs.user.*;
 import dk.lw.loginservice.domain.User;
 
 import java.text.ParseException;
+import java.util.Optional;
+import java.util.UUID;
 
 @GrpcService
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
@@ -45,6 +47,23 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
                 responseObserver.onCompleted();
             }
             throw new Exception("User with cpr: " + request.getCpr() + " not found");
+
+        } catch (Exception ex) {
+            responseObserver.onError(Status.NOT_FOUND.getCause());
+        }
+    }
+
+    @Override
+    public void getUserById(GetUserRequest request, StreamObserver<UserResponse> responseObserver) {
+        try {
+            Optional<User> optUser = userRepository.findById(UUID.fromString(request.getId()));
+            if(optUser.isPresent()) {
+                User user = optUser.get();
+                UserResponse response = createResponse(user);
+                responseObserver.onNext(response);
+                responseObserver.onCompleted();
+            }
+            throw new Exception("User with id: " + request.getId() + " not found");
 
         } catch (Exception ex) {
             responseObserver.onError(Status.NOT_FOUND.getCause());
