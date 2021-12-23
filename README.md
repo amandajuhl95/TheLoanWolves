@@ -49,8 +49,8 @@ docker run -d --name camunda -p 8080:8080 camunda/camunda-bpm-platform:latest
 1. Go to [Camunda Dashboard](http://localhost:8080/camunda/app/cockpit/default/#/dashboard) to check tha Camunda is running. 
 
 ##### Login information
-Username = demo
-Password = demo
+- Username = demo
+- Password = demo
 
 2. Click on "Process Definitions" 
 3. Click on "SI_exam_Loan_picker_process"
