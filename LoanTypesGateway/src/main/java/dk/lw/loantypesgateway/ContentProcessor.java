@@ -13,8 +13,6 @@ import java.util.List;
 @Component
 public class ContentProcessor implements Processor
 {
-
-
     public void process(Exchange exchange) throws Exception
     {
         String custom = exchange.getIn().getBody(String.class);
@@ -34,7 +32,6 @@ public class ContentProcessor implements Processor
         }
         return loanTypes;
     }
-
 
     private List<LoanType> convertLoanInformation(List<LoanType> loanTypes) throws JSONException, IOException {
         MoneyConvert moneyConvert = new MoneyConvert();
