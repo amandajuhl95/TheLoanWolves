@@ -70,10 +70,10 @@ public class User {
         Date birthDate = AppSettings.cprFormatter.parse(birthday);
         Date today = new Date();
 
-        long diff = Math.abs(today.getTime() - birthDate.getTime());
-        int age = (int)(diff / (1000l*60*60*24*365));
+        Long diff = Math.abs(today.getTime() - birthDate.getTime());
+        Long age = (diff / (1000l*60*60*24*365));
 
-        return age;
+        return age.intValue();
     }
 
     private String hash(String password) {

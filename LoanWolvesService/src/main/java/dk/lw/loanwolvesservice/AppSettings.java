@@ -17,5 +17,5 @@ public class AppSettings {
     public static final Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret),
             SignatureAlgorithm.HS256.getJcaName());
 
-
+    public static final String serviceName = "LoanWolvesService";
 }

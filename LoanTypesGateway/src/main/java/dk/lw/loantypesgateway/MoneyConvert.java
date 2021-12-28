@@ -25,5 +25,5 @@ public class MoneyConvert {
         JSONObject data = new JSONObject(jsonData);
         //System.out.println(Double.parseDouble(data.getJSONObject("rates").getJSONObject("DKK").getString("rate")));
         return Double.parseDouble(data.getJSONObject("rates").getJSONObject("DKK").getString("rate"));
-}
+    }
 }

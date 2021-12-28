@@ -1,9 +1,8 @@
 package dk.lw.loanwolvesservice.infrastructure;
 
-import com.google.gson.Gson;
 import dk.lw.loanwolvesservice.AppSettings;
-import dk.lw.loanwolvesservice.DTO.AccountDTO;
-import dk.lw.loanwolvesservice.DTO.TransactionDTO;
+import dk.lw.loanwolvesservice.DTO.account.AccountDTO;
+import dk.lw.loanwolvesservice.DTO.account.TransactionDTO;
 import dk.lw.loanwolvesservice.domain.AccountType;
 
 import java.io.IOException;

@@ -1,5 +1,4 @@
-package dk.lw.loanwolvesservice.DTO;
-
+package dk.lw.loanwolvesservice.DTO.log;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoanRequestDTO {
+public class LogDTO {
 
-    private LoanUserDTO user;
-    private double amount;
+    private String serviceName, errorMessage;
+    private int errorCode;
 
 }

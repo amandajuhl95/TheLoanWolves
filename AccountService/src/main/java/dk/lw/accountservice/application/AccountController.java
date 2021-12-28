@@ -1,5 +1,6 @@
 package dk.lw.accountservice.application;
 
+import dk.lw.accountservice.AppSettings;
 import dk.lw.accountservice.DTO.AccountDTO;
 import dk.lw.accountservice.DTO.TransactionDTO;
 import dk.lw.accountservice.domain.Account;
@@ -10,6 +11,7 @@ import dk.lw.accountservice.errorhandling.NotAllowedException;
 import dk.lw.accountservice.errorhandling.NotFoundException;
 import dk.lw.accountservice.infrastructure.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,12 +31,10 @@ public class AccountController {
     private LoggingProducer producer;
 
     @PostMapping("/new/{type}/{userId}")
-    public AccountDTO createAccount(@PathVariable @Valid UUID userId, @PathVariable @Valid AccountType type) throws InvalidTransactionException {
-        producer.sendLogs("AccountService", "kafka test", 400);
-        throw new InvalidTransactionException("kafka test");
-        //Account account = new Account(userId, type);
-       // account = accountRepository.save(account);
-        //return new AccountDTO(account);
+    public AccountDTO createAccount(@PathVariable UUID userId, @PathVariable AccountType type) {
+        Account account = new Account(userId, type);
+        account = accountRepository.save(account);
+        return new AccountDTO(account);
     }
 
     @PostMapping("/{userId}/{accountId}")
@@ -51,15 +51,15 @@ public class AccountController {
                     return new AccountDTO(account);
                 }
                 String error = "The account balance is too low to perform transaction";
-                producer.sendLogs("AccountService", error, 400);
+                producer.sendLogs(AppSettings.serviceName, error, HttpStatus.FORBIDDEN.value());
                 throw new InvalidTransactionException(error);
             }
             String error = "User does not own this account";
-            producer.sendLogs("AccountService", error, 400);
+            producer.sendLogs(AppSettings.serviceName, error, HttpStatus.FORBIDDEN.value());
             throw new InvalidTransactionException(error);
         }
         String error = "Account: " + accountId + " not found";
-        producer.sendLogs("AccountService", error, 404);
+        producer.sendLogs(AppSettings.serviceName, error, HttpStatus.NOT_FOUND.value());
         throw new NotFoundException(error);
     }
 
@@ -72,13 +72,17 @@ public class AccountController {
             if(account.getUserId().equals(userId)) {
                 return new AccountDTO(account);
             }
-            throw new NotAllowedException("User does not own this account");
+            String error = "User does not own this account";
+            producer.sendLogs(AppSettings.serviceName, error, HttpStatus.FORBIDDEN.value());
+            throw new NotAllowedException(error);
         }
-        throw new NotFoundException("Account: " + accountId + " not found");
+        String error = "Account: " + accountId + " not found";
+        producer.sendLogs(AppSettings.serviceName, error, HttpStatus.NOT_FOUND.value());
+        throw new NotFoundException(error);
     }
 
     @GetMapping("/{userId}")
-    public List<AccountDTO> getAccounts(@PathVariable @Valid UUID userId) throws NotAllowedException, NotFoundException {
+    public List<AccountDTO> getAccounts(@PathVariable @Valid UUID userId) {
         List<Account> accounts = accountRepository.findByUserId(userId);
         List<AccountDTO> accountDTOs = new ArrayList<>();
 

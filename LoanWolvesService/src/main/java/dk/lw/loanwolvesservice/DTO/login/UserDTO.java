@@ -1,11 +1,9 @@
-package dk.lw.loanwolvesservice.DTO;
+package dk.lw.loanwolvesservice.DTO.login;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import stubs.user.Address;
-import stubs.user.Type;
 import stubs.user.UserResponse;
 
 import java.util.UUID;
@@ -16,7 +14,7 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO {
     private UUID id;
-    private String fullName, email, phoneNumber, cpr, password, newPassword;
+    private String fullName, email, phoneNumber, cpr;
     private int age;
     private double salary;
     private String type;

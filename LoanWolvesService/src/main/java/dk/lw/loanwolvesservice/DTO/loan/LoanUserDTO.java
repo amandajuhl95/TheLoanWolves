@@ -1,5 +1,7 @@
-package dk.lw.loanwolvesservice.DTO;
+package dk.lw.loanwolvesservice.DTO.loan;
 
+import dk.lw.loanwolvesservice.DTO.login.AddressDTO;
+import dk.lw.loanwolvesservice.DTO.login.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,7 @@ public class LoanUserDTO {
     private int age;
     private double salary;
     private AddressDTO address;
+
 
     public LoanUserDTO(UserDTO user) {
         this.id = user.getId();

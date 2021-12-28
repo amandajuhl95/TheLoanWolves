@@ -1,12 +1,19 @@
 package dk.lw.loanwolvesservice.application;
 
-import dk.lw.loanwolvesservice.DTO.LoginDTO;
-import dk.lw.loanwolvesservice.DTO.UserDTO;
+import dk.lw.loanwolvesservice.AppSettings;
+import dk.lw.loanwolvesservice.DTO.login.CreateUserDTO;
+import dk.lw.loanwolvesservice.DTO.login.LoginDTO;
+import dk.lw.loanwolvesservice.DTO.login.UpdateUserDTO;
+import dk.lw.loanwolvesservice.DTO.login.UserDTO;
 import dk.lw.loanwolvesservice.Utils;
 import dk.lw.loanwolvesservice.errorhandling.LoginException;
 import dk.lw.loanwolvesservice.errorhandling.UnauthorizedException;
 import dk.lw.loanwolvesservice.infrastructure.LoginClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/loan-wolves")
@@ -14,30 +21,37 @@ public class LoginController {
 
     private LoginClient loginClient = new LoginClient();
 
+    @Autowired
+    LoggingProducer producer;
+
     @PostMapping("/login")
-    public String login(@RequestBody LoginDTO request) throws LoginException {
+    public String login(@RequestBody @Valid LoginDTO request) throws LoginException {
         String token = loginClient.login(request);
-        if(token.isEmpty()) {
-            throw new LoginException("Invalid login");
-        }
         return token;
     }
 
     @PostMapping("/new/user")
-    public UserDTO createUser(@RequestBody UserDTO user) {
-        user = loginClient.createUser(user);
+    public UserDTO createUser(@RequestBody @Valid CreateUserDTO userDTO) {
+        UserDTO user = loginClient.createUser(userDTO);
         return user;
     }
 
     @PutMapping("/update/user")
-    public UserDTO updateUser(@RequestBody UserDTO user, @RequestHeader("Session-Token") String token) throws UnauthorizedException {
+    public UserDTO updateUser(@RequestBody @Valid UpdateUserDTO userDTO, @RequestHeader("Session-Token") String token) throws UnauthorizedException {
 
-        if(Utils.validToken(token) && Utils.authorize(token, user.getId()))
-        {
-            user = loginClient.updateUser(user);
-            return user;
+        if(Utils.validToken(token)) {
+            if(Utils.authorize(token, userDTO.getId()))
+            {
+                UserDTO user = loginClient.updateUser(userDTO);
+                return user;
+            }
+            String error = "Unauthorized for this action";
+            producer.sendLogs(AppSettings.serviceName, error, HttpStatus.UNAUTHORIZED.value());
+            throw new UnauthorizedException(error);
         }
-        throw new UnauthorizedException("Login expired or unauthorized for this action");
+        String error = "Login expired";
+        producer.sendLogs(AppSettings.serviceName, error, HttpStatus.UNAUTHORIZED.value());
+        throw new UnauthorizedException(error);
     }
 
     @GetMapping("/user/{cpr}")
@@ -49,8 +63,12 @@ public class LoginController {
             {
                 return user;
             }
-            throw new UnauthorizedException("Unauthorized for this action");
+            String error = "Unauthorized for this action";
+            producer.sendLogs(AppSettings.serviceName, error, HttpStatus.UNAUTHORIZED.value());
+            throw new UnauthorizedException(error);
         }
-        throw new UnauthorizedException("Login expired");
+        String error = "Login expired";
+        producer.sendLogs(AppSettings.serviceName, error, HttpStatus.UNAUTHORIZED.value());
+        throw new UnauthorizedException(error);
     }
 }

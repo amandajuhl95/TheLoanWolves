@@ -9,6 +9,4 @@ public class LoanType {
     String type;
     double min_limit, max_limit, interest_rate,fee;
     int duration;
-
-
 }

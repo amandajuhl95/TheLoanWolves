@@ -3,10 +3,9 @@ package dk.lw.loanservice.application;
 import dk.lw.loanservice.DTO.LoanRequestDTO;
 import dk.lw.loanservice.DTO.TransactionDTO;
 import dk.lw.loanservice.infrastructure.LoanQuoteClient;
+import dk.lw.loanservice.infrastructure.LoanQuoteClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -27,7 +26,7 @@ public class Controller {
     }
 
     @PostMapping("/request")
-    public void requestLoan(@RequestBody LoanRequestDTO loanRequest) throws IOException {
+    public void requestLoan(@RequestBody LoanRequestDTO loanRequest) throws LoanQuoteClientException {
         LoanQuoteClient.requestLoanQuote(loanRequest);
     }
 

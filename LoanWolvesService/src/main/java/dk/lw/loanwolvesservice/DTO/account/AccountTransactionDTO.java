@@ -1,4 +1,4 @@
-package dk.lw.loanwolvesservice.DTO;
+package dk.lw.loanwolvesservice.DTO.account;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import dk.lw.loanwolvesservice.domain.TransactionType;
@@ -12,13 +12,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TransactionDTO {
-    private UUID transactionId;
+public class AccountTransactionDTO {
+    private UUID id;
     private double amount;
     private TransactionType type;
-
-    public TransactionDTO(double amount, TransactionType type) {
-        this.amount = amount;
-        this.type = type;
-    }
+    private String date;
 }
