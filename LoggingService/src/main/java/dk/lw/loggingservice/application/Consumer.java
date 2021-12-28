@@ -6,10 +6,9 @@ import dk.lw.loggingservice.domain.Log;
 import dk.lw.loggingservice.infrastructure.LogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class Consumer {
 
     private final Gson gson = new Gson();
@@ -17,7 +16,7 @@ public class Consumer {
    @Autowired
     private LogRepository logRepository;
 
-    @KafkaListener(topics = "logging")
+    @KafkaListener(topics = "logging", groupId = "log-id")
     public void logging(String request)
     {
         LogDTO logDTO = gson.fromJson(request, LogDTO.class);

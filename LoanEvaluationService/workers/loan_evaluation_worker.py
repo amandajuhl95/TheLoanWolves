@@ -1,3 +1,4 @@
+from os import error
 from camunda.external_task.external_task import ExternalTask, TaskResult
 from camunda.external_task.external_task_worker import ExternalTaskWorker
 import threading
@@ -49,7 +50,7 @@ def liability(task: ExternalTask) -> TaskResult:
     Liable, Fee, InterestRate, Lookover, Duration = False, 0, 0.0, False, 0
     bpmn_error = False
 
-    if Amount == 0 or Salary == 0 or Age < 12:
+    if Amount == 0 or Salary == 0 or Age < 12 or FullName == None or CPR == None or UserId == None or Address == None:
         bpmn_error = True
 
     elif Amount < get_loan_info(loan_types, "Quick","max_limit"):
@@ -61,11 +62,13 @@ def liability(task: ExternalTask) -> TaskResult:
     elif Amount < get_loan_info(loan_types, "Asset","max_limit")  and Salary > 40000 and Age > 28:
         print("Loan Accepted... third condition")
         Liable, Fee, InterestRate, Lookover, Duration = True, get_loan_info(loan_types, "Asset","fee"), get_loan_info(loan_types, "Asset","interest_rate"), False, get_loan_info(loan_types, "Asset","Duration")
-    elif Amount >= get_loan_info(loan_types, "Big","min_limit"):# and Salary > 45000 and Married != "false" and Address != None and Age > 35:
+    elif Amount >= get_loan_info(loan_types, "Big","min_limit") and Salary > 45000 and Address != None and Age > 30:
         print("Loan Accepted... forth condition")
         Liable, Fee, InterestRate, Lookover, Duration = True, get_loan_info(loan_types, "Big","fee"), get_loan_info(loan_types, "Big","interest_rate"), True, get_loan_info(loan_types, "Big","Duration")
 
     if bpmn_error:
+        producer = KafkaProducer(value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        producer.send('logging', {'serviceName': "loan_evaluation_worker", 'errorMessage' : 'one of the parameters was not provided. Remember to provide: Age, fullname, salary, amount and address'})
         return task.bpmn_error(error_code="Client_information_error", error_message="Client data error.. try restarting the process")
 
     print("The customers liable status was: ", Liable)
@@ -107,29 +110,35 @@ def send_email(task: ExternalTask) -> TaskResult:
         Loan Wolfs
         """.format(FullName, Amount)
 
+    try:
+        #The mail addresses and password
+        sender = "theloanwolvesdk@gmail.com"
+        reciver = Email
 
-    #The mail addresses and password
-    sender = "pigenman1298288323@gmail.com"
-    reciver = Email
+        sender_address = sender
+        sender_pass = 'chokobanan1!'
+        receiver_address = reciver
+        #Setup the MIME
+        message = MIMEMultipart()
+        message['From'] = sender_address
+        message['To'] = receiver_address
+        message['Subject'] = Subject
+        #The body and the attachments for the mail
+        message.attach(MIMEText(mail_content, 'plain'))
+        #Create SMTP session for sending the mail
+        session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
+        session.starttls() #enable security
+        session.login(sender_address, sender_pass) #login with mail_id and password
+        text = message.as_string()
+        session.sendmail(sender_address, receiver_address, text)
+        session.quit()
+        print('Mail Sent')
+    except smtplib.SMTPAuthenticationError as e:
+        producer = KafkaProducer(value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        producer.send('logging', {'serviceName': "loan_evaluation_worker", 'errorMessage' : 'Could not connect to the mail theloanwolvesdk@gmail.com. See full error:' + str(e.smtp_error)})
+        raise Exception("Could not connect to the mail theloanwolvesdk@gmail.com. See full error: ", e.smtp_error)
 
-    sender_address = sender
-    sender_pass = 'tun89tcvsudoku95'
-    receiver_address = reciver
-    #Setup the MIME
-    message = MIMEMultipart()
-    message['From'] = sender_address
-    message['To'] = receiver_address
-    message['Subject'] = Subject
-    #The body and the attachments for the mail
-    message.attach(MIMEText(mail_content, 'plain'))
-    #Create SMTP session for sending the mail
-    session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
-    session.starttls() #enable security
-    session.login(sender_address, sender_pass) #login with mail_id and password
-    text = message.as_string()
-    session.sendmail(sender_address, receiver_address, text)
-    session.quit()
-    print('Mail Sent')
+
     return task.complete({ "FullName": FullName, "Email":Email, "CPR":CPR, "UserId":UserId, "Amount": float(Amount), "Fee": float(Fee), "InterestRate": float(InterestRate), "Duration":int(Duration)})
 
 def save_loan_quote(task: ExternalTask) -> TaskResult:
@@ -143,10 +152,14 @@ def save_loan_quote(task: ExternalTask) -> TaskResult:
 
     print(Amount,CPR,UserId,Fee,InterestRate,Duration)
 
-    producer = KafkaProducer(value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-    producer.send('save-loan-qoute', {'amount': Amount,'cpr':CPR ,'userId':UserId ,'fee':Fee ,'interestRate':InterestRate ,'duration': Duration})
+    try:
+        producer = KafkaProducer(value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        producer.send('save-loan-quote', {'amount': Amount,'cpr':CPR ,'userId':UserId ,'fee':Fee ,'interestRate':InterestRate ,'duration': Duration})
+        return task.complete()
 
-    return task.complete()
+    except Exception  as e:
+        raise ConnectionError("Could not connect to Kafka, check if it is running.")
+
 
 
 
