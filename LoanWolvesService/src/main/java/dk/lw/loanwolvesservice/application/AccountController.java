@@ -1,7 +1,7 @@
 package dk.lw.loanwolvesservice.application;
 
-import dk.lw.loanwolvesservice.DTO.AccountDTO;
-import dk.lw.loanwolvesservice.DTO.TransactionDTO;
+import dk.lw.loanwolvesservice.DTO.account.AccountDTO;
+import dk.lw.loanwolvesservice.DTO.account.TransactionDTO;
 import dk.lw.loanwolvesservice.Utils;
 import dk.lw.loanwolvesservice.domain.AccountType;
 import dk.lw.loanwolvesservice.errorhandling.UnauthorizedException;
@@ -9,6 +9,7 @@ import dk.lw.loanwolvesservice.infrastructure.AccountClient;
 import dk.lw.loanwolvesservice.infrastructure.LoginClient;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -49,7 +50,7 @@ public class AccountController {
     }
 
     @PostMapping("/account/transaction/{userId}/{accountId}")
-    public AccountDTO transaction (@PathVariable UUID userId, @PathVariable UUID accountId, @RequestBody TransactionDTO transaction, @RequestHeader("Session-Token") String token) throws UnauthorizedException, IOException {
+    public AccountDTO transaction (@PathVariable UUID userId, @PathVariable UUID accountId, @RequestBody @Valid TransactionDTO transaction, @RequestHeader("Session-Token") String token) throws UnauthorizedException, IOException {
         if(Utils.validToken(token)) {
             if(Utils.authorize(token, userId))
             {

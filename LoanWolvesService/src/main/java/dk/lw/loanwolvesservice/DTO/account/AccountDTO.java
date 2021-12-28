@@ -1,4 +1,4 @@
-package dk.lw.loanwolvesservice.DTO;
+package dk.lw.loanwolvesservice.DTO.account;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import dk.lw.loanwolvesservice.domain.AccountType;
@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

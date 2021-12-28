@@ -21,20 +21,21 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
     @Override
     public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {
-        try {
-            User user = userRepository.findOneByCpr(request.getCpr());
+        User user = userRepository.findOneByCpr(request.getCpr());
 
-            if(user != null && user.validPassword(request.getPassword())) {
+        if(user != null) {
+            if (user.validPassword(request.getPassword())) {
                 String token = user.generateToken();
                 LoginResponse response = LoginResponse.newBuilder().setToken(token).build();
                 responseObserver.onNext(response);
                 responseObserver.onCompleted();
             }
-            throw new Exception("User with cpr: " + request.getCpr() + " not found");
-
-        } catch (Exception ex) {
-            responseObserver.onError(Status.NOT_FOUND.getCause());
+            Status status = Status.INVALID_ARGUMENT.withDescription("Wrong CPR or password");
+            responseObserver.onError(status.asRuntimeException());
         }
+        Status status = Status.NOT_FOUND.withDescription("User with cpr: " + request.getCpr() + " not found");
+        responseObserver.onError(status.asRuntimeException());
+
     }
 
     @Override

@@ -1,10 +1,11 @@
 package dk.lw.loanwolvesservice.infrastructure;
 
-import dk.lw.loanwolvesservice.DTO.LoginDTO;
-import dk.lw.loanwolvesservice.DTO.UserDTO;
+import dk.lw.loanwolvesservice.DTO.login.CreateUserDTO;
+import dk.lw.loanwolvesservice.DTO.login.LoginDTO;
+import dk.lw.loanwolvesservice.DTO.login.UpdateUserDTO;
+import dk.lw.loanwolvesservice.DTO.login.UserDTO;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import stubs.user.*;
 
@@ -50,21 +51,21 @@ public class LoginClient {
         return user;
     }
 
-    public UserDTO createUser(UserDTO userDTO) {
+    public UserDTO createUser(CreateUserDTO newUser) {
         Address address = Address.newBuilder()
-                .setNumber(userDTO.getAddress().getNumber())
-                .setStreet(userDTO.getAddress().getStreet())
-                .setCity(userDTO.getAddress().getCity())
-                .setZipcode(userDTO.getAddress().getZipcode()).build();
+                .setNumber(newUser.getAddress().getNumber())
+                .setStreet(newUser.getAddress().getStreet())
+                .setCity(newUser.getAddress().getCity())
+                .setZipcode(newUser.getAddress().getZipcode()).build();
 
         CreateUserRequest request = CreateUserRequest.newBuilder()
-                .setCpr(userDTO.getCpr())
-                .setPassword(userDTO.getPassword())
-                .setFullName(userDTO.getFullName())
-                .setEmail(userDTO.getEmail())
-                .setPhoneNumber(userDTO.getPhoneNumber())
-                .setSalary(userDTO.getSalary())
-                .setType(Type.valueOf(userDTO.getType()))
+                .setCpr(newUser.getCpr())
+                .setPassword(newUser.getPassword())
+                .setFullName(newUser.getFullName())
+                .setEmail(newUser.getEmail())
+                .setPhoneNumber(newUser.getPhoneNumber())
+                .setSalary(newUser.getSalary().doubleValue())
+                .setType(Type.valueOf(newUser.getType().toString()))
                 .setAddress(address).build();
 
         UserResponse response = userServiceBlockingStub.createUser(request);
@@ -72,7 +73,7 @@ public class LoginClient {
         return user;
     }
 
-    public UserDTO updateUser(UserDTO userDTO) {
+    public UserDTO updateUser(UpdateUserDTO userDTO) {
         Address address = Address.newBuilder()
                 .setNumber(userDTO.getAddress().getNumber())
                 .setStreet(userDTO.getAddress().getStreet())
@@ -81,12 +82,12 @@ public class LoginClient {
 
         UpdateUserRequest request = UpdateUserRequest.newBuilder()
                 .setCpr(userDTO.getCpr())
-                .setOldPassword(userDTO.getPassword())
+                .setOldPassword(userDTO.getOldPassword())
                 .setNewPassword(userDTO.getNewPassword())
                 .setFullName(userDTO.getFullName())
                 .setEmail(userDTO.getEmail())
                 .setPhoneNumber(userDTO.getPhoneNumber())
-                .setSalary(userDTO.getSalary())
+                .setSalary(userDTO.getSalary().doubleValue())
                 .setAddress(address).build();
 
         UserResponse response = userServiceBlockingStub.updateUser(request);

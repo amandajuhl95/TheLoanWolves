@@ -10,8 +10,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionDTO {
-
     private UUID transactionId;
     private double amount;
+    private TransactionTypeDTO type;
 
 }
