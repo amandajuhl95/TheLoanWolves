@@ -1,5 +1,6 @@
 package dk.lw.loanservice.infrastructure;
 
+import dk.lw.loanservice.AppSettings;
 import dk.lw.loanservice.DTO.LoanRequestDTO;
 import okhttp3.*;
 import org.springframework.stereotype.Service;
@@ -11,18 +12,29 @@ import java.net.URL;
 
 public class LoanQuoteClient {
 
-    public static void requestLoanQuote(LoanRequestDTO loanRequestDTO) throws IOException {
-
+    public static void requestLoanQuote(LoanRequestDTO loanRequestDTO) throws LoanQuoteClientException {
         try {
-        String task = "08d89646-632e-11ec-bf1e-0242ac110002";
+            String loanRequest = createRequest(loanRequestDTO);
 
-        URL url = new URL("http://localhost:8080/engine-rest/process-definition/" + task + "/start");
-        //HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        //con.setRequestMethod("POST");
-        //con.setRequestProperty("Content-Type", "application/json; utf-8");
-        //con.setRequestProperty("Accept", "application/json");
-        //con.setDoOutput(true);
-        String jsonInputString = "{\"variables\":{" +
+            OkHttpClient client = new OkHttpClient().newBuilder()
+                    .build();
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType,loanRequest);
+            Request request = new Request.Builder()
+                    .url(AppSettings.camundaURL)
+                    .method("POST", body)
+                    .addHeader("Content-Type", "application/json")
+                    .build();
+            Response response = client.newCall(request).execute();
+
+        } catch(IOException e) {
+            throw new LoanQuoteClientException(e);
+        }
+    }
+
+    private static String createRequest(LoanRequestDTO loanRequestDTO) {
+
+        String request = "{\"variables\":{" +
                 "\"FullName\":{" +
                 "\"value\": \"" + loanRequestDTO.getUser().getFullName() + "\"" +
                 "}," +
@@ -45,29 +57,11 @@ public class LoanQuoteClient {
                 "\"value\": " + loanRequestDTO.getAmount() +
                 "}," +
                 "\"Address\":{" +
-                "\"value\": \"" + loanRequestDTO.getUser().getAddress().getStreet() + " " + loanRequestDTO.getUser().getAddress().getNumber() + ", " + loanRequestDTO.getUser().getAddress().getZipcode() + " " + loanRequestDTO.getUser().getAddress().getCity() + "\" } } }";
+                "\"value\": \"" + loanRequestDTO.getUser().getAddress().getStreet() + " " +
+                loanRequestDTO.getUser().getAddress().getNumber() + ", " +
+                loanRequestDTO.getUser().getAddress().getZipcode() + " " +
+                loanRequestDTO.getUser().getAddress().getCity() + "\" } } }";
 
-      /*  try(OutputStream os = con.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes("utf-8");
-            os.write(input, 0, input.length);
-        } */
-            OkHttpClient client = new OkHttpClient().newBuilder()
-                    .build();
-            MediaType mediaType = MediaType.parse("application/json");
-            RequestBody body = RequestBody.create(mediaType,jsonInputString);
-            Request request = new Request.Builder()
-                    .url("http://localhost:8080/engine-rest/process-definition/08d89646-632e-11ec-bf1e-0242ac110002/start")
-                    .method("POST", body)
-                    .addHeader("Content-Type", "application/json")
-                    .build();
-            Response response = client.newCall(request).execute();
-
-
-        } catch(IOException e) {
-            throw new IOException();
-        }
-
-
-
+        return request;
     }
 }
