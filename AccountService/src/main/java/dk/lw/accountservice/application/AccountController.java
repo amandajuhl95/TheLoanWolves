@@ -29,10 +29,12 @@ public class AccountController {
     private LoggingProducer producer;
 
     @PostMapping("/new/{type}/{userId}")
-    public AccountDTO createAccount(@PathVariable @Valid UUID userId, @PathVariable @Valid AccountType type) {
-        Account account = new Account(userId, type);
-        account = accountRepository.save(account);
-        return new AccountDTO(account);
+    public AccountDTO createAccount(@PathVariable @Valid UUID userId, @PathVariable @Valid AccountType type) throws InvalidTransactionException {
+        producer.sendLogs("AccountService", "kafka test", 400);
+        throw new InvalidTransactionException("kafka test");
+        //Account account = new Account(userId, type);
+       // account = accountRepository.save(account);
+        //return new AccountDTO(account);
     }
 
     @PostMapping("/{userId}/{accountId}")
