@@ -21,4 +21,6 @@ public class AppSettings {
 
     public static final SimpleDateFormat cprFormatter = new SimpleDateFormat("ddMMyy");
 
+    public static final String serviceName = "LoginService";
+
 }
