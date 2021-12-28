@@ -2,15 +2,20 @@ package dk.lw.loanservice.infrastructure;
 
 import dk.lw.loanservice.AppSettings;
 import dk.lw.loanservice.DTO.LoanRequestDTO;
+import dk.lw.loanservice.application.LoggingProducer;
+import dk.lw.loanservice.application.Producer;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class LoanQuoteClient {
+
+    @Autowired
+    private static LoggingProducer producer;
 
     public static void requestLoanQuote(LoanRequestDTO loanRequestDTO) throws LoanQuoteClientException {
         try {
@@ -25,9 +30,12 @@ public class LoanQuoteClient {
                     .method("POST", body)
                     .addHeader("Content-Type", "application/json")
                     .build();
-            Response response = client.newCall(request).execute();
+            client.newCall(request).execute();
 
         } catch(IOException e) {
+            String error = e.getMessage();
+
+            producer.sendLogs(AppSettings.serviceName, error, HttpStatus.FORBIDDEN.value());
             throw new LoanQuoteClientException(e);
         }
     }
