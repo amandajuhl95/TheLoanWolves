@@ -6,16 +6,13 @@ import dk.lw.loanwolvesservice.DTO.login.UpdateUserDTO;
 import dk.lw.loanwolvesservice.DTO.login.UserDTO;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.springframework.stereotype.Service;
 import stubs.user.*;
 
 import java.util.UUID;
 
-@Service
-public class LoginClient {
+ public class LoginClient {
 
     private UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub;
-    private ManagedChannel channel;
 
     public LoginClient() {
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
@@ -97,3 +94,4 @@ public class LoginClient {
 
 
 }
+
