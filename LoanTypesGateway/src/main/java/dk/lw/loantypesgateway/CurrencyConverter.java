@@ -1,6 +1,6 @@
 package dk.lw.loantypesgateway;
 
-import dk.lw.loantypesgateway.logging.LoggingProducer;
+import dk.lw.loantypesgateway.logging.Logger;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class CurrencyConverter {
 
-    LoggingProducer producer = new LoggingProducer();
+    Logger producer = new Logger();
 
     public double convert() throws IOException {
         try {

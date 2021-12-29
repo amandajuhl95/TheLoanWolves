@@ -31,7 +31,7 @@ public class LoanController {
     private LoginClient loginClient = new LoginClient();
 
     @Autowired
-    private LoggingProducer producer;
+    private Logger producer;
 
     @PostMapping("/loan/decision/{status}/{userId}/{loanQuoteId}")
     public HttpStatus loanDecision (@PathVariable LoanQuoteStatus status, @PathVariable UUID userId, @PathVariable UUID loanQuoteId, @RequestHeader("Session-Token") String token) throws UnauthorizedException, IOException {

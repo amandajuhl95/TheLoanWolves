@@ -22,7 +22,7 @@ public class LoginController {
     private LoginClient loginClient = new LoginClient();
 
     @Autowired
-    LoggingProducer producer;
+    Logger producer;
 
     @PostMapping("/login")
     public String login(@RequestBody @Valid LoginDTO request) throws LoginException {

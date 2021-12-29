@@ -1,13 +1,13 @@
-package dk.lw.loginservice.application;
+package dk.lw.loantypesgateway.logging;
 
 import com.google.gson.Gson;
-import dk.lw.loginservice.DTO.LogDTO;
+import dk.lw.loantypesgateway.logging.DTO.LogDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoggingProducer {
+public class Logger {
 
     private final Gson gson = new Gson();
     private static final String TOPIC = "logging";

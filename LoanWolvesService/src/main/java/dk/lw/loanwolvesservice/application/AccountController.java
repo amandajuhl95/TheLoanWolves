@@ -25,7 +25,7 @@ public class AccountController {
     private LoginClient loginClient = new LoginClient();
 
     @Autowired
-    private LoggingProducer producer;
+    private Logger producer;
 
     @GetMapping("/account/{userId}/{accountId}")
     public AccountDTO getAccount (@PathVariable UUID userId, @PathVariable UUID accountId, @RequestHeader("Session-Token") String token) throws UnauthorizedException, IOException {

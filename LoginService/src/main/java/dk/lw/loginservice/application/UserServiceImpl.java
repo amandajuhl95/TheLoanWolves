@@ -21,7 +21,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
     private UserRepository userRepository;
 
     @Autowired
-    private LoggingProducer producer;
+    private Logger producer;
 
     @Override
     public void login(LoginRequest request, StreamObserver<LoginResponse> responseObserver) {

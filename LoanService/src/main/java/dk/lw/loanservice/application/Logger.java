@@ -7,7 +7,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoggingProducer {
+public class Logger {
 
     private static final Gson gson = new Gson();
     private static final String TOPIC = "logging";

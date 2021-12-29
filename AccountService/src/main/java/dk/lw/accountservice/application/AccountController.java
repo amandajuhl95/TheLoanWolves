@@ -28,7 +28,7 @@ public class AccountController {
     private AccountRepository accountRepository;
 
     @Autowired
-    private LoggingProducer producer;
+    private Logger producer;
 
     @PostMapping("/new/{type}/{userId}")
     public AccountDTO createAccount(@PathVariable UUID userId, @PathVariable AccountType type) {
