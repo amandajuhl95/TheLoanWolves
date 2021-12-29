@@ -22,7 +22,7 @@ public class LoanQuote {
     private int duration;
 
     public LoanQuote(LoanQuoteDTO loanQuoteDTO) {
-        this.id = UUID.randomUUID();
+        this.id = loanQuoteDTO.getId();
         this.userId = loanQuoteDTO.getUserId();
         this.cpr = loanQuoteDTO.getCpr();
         this.amount = loanQuoteDTO.getAmount();

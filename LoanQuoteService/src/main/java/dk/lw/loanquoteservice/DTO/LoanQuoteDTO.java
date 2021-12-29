@@ -10,7 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class LoanQuoteDTO {
 
-    private UUID userId;
+    private UUID id, userId;
     private String cpr;
     private double amount, fee, interestRate;
     private int duration;
