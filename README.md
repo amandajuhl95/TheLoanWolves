@@ -118,7 +118,10 @@ type = SAVINGS, SALARY, PAYMENT or DEBIT
 @RequestBody {"amount":Double} 
 ```
 
-10. Accept loan[POST]: /loan/accept/{userId}/{loanQuoteId}
+10. Loan decision[POST]: /loan/decision/{status}/{userId}/{loanQuoteId}
+```
+status = ACCEPTED or DECLINED
+```
 
 11. Make amortization[POST]: /loan/amortization/{userId}/{accountId}/{loanId}
 ```
