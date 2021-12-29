@@ -7,14 +7,12 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
 public class ContentProcessor implements Processor
 {
-    public void process(Exchange exchange) throws Exception
-    {
+    public void process(Exchange exchange) throws IOException {
         String custom = exchange.getIn().getBody(String.class);
 
         List<LoanType> loanTypes = extractLoanTypes(custom);
@@ -33,8 +31,8 @@ public class ContentProcessor implements Processor
         return loanTypes;
     }
 
-    private List<LoanType> convertLoanInformation(List<LoanType> loanTypes) throws JSONException, IOException {
-        MoneyConvert moneyConvert = new MoneyConvert();
+    private List<LoanType> convertLoanInformation(List<LoanType> loanTypes) throws IOException {
+        CurrencyConverter moneyConvert = new CurrencyConverter();
 
         double conversionRate = moneyConvert.convert();
 

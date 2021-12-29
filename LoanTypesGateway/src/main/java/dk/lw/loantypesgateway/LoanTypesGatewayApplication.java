@@ -18,7 +18,10 @@ public class LoanTypesGatewayApplication {
             Thread.sleep(5000);
             ctx.stop();
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+
+        }
+
         SpringApplication.run(LoanTypesGatewayApplication.class, args);
     }
 }
