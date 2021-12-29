@@ -26,7 +26,7 @@ public class LoanConsumer {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    /*@KafkaListener(topics = "loan-transfer", groupId = "loan")
+    @KafkaListener(topics = "loan-transfer", groupId = "loan")
     public void transferLoan(String request)
     {
         LoanDTO loanDTO = gson.fromJson(request, LoanDTO.class);
@@ -52,5 +52,5 @@ public class LoanConsumer {
             transaction.cancelTransaction(amortizationDTO);
             transactionRepository.save(transaction);
         }
-    }*/
+    }
 }
