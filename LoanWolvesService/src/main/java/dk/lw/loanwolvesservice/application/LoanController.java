@@ -49,7 +49,7 @@ public class LoanController {
         throw new UnauthorizedException(error);
     }
 
-    @PostMapping("/loan/amortization/{loanId}")
+    @PostMapping("/loan/amortization/{userId}/{accountId}/{loanId}")
     public HttpStatus loanAmortization (@PathVariable UUID userId, @PathVariable UUID loanId, @PathVariable UUID accountId, @RequestBody @Valid TransactionDTO transaction, @RequestHeader("Session-Token") String token) throws UnauthorizedException, IOException, LoanException {
         if(Utils.validToken(token)) {
             if(Utils.authorize(token, userId))
