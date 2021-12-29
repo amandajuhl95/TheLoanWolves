@@ -1,7 +1,7 @@
 package dk.lw.loanamortizationservice.domain;
 
+import dk.lw.loanamortizationservice.AppSettings;
 import dk.lw.loanamortizationservice.DTO.AmortizationDTO;
-import dk.lw.loanamortizationservice.Utils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +31,7 @@ public class Amortization {
         this.loan = loan;
         this.payment = amortizationDTO.getPayment();
         this.payOffAmount = calcActualPayment(amortizationDTO.getPayment());
-        this.date = Utils.formatter.format(new Date());
+        this.date = AppSettings.formatter.format(new Date());
     }
 
     private double calcActualPayment(double paid) {

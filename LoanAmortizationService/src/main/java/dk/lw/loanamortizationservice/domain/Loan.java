@@ -1,6 +1,6 @@
 package dk.lw.loanamortizationservice.domain;
 
-import dk.lw.loanamortizationservice.Utils;
+import dk.lw.loanamortizationservice.AppSettings;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,8 +34,8 @@ public class Loan {
         this.amount = loanQuote.getAmount();
         this.interestRate = loanQuote.getInterestRate();
         this.principal = loanQuote.getAmount() + loanQuote.getFee();
-        this.startDate = Utils.formatter.format(date);
-        this.endDate = Utils.formatter.format(DateUtils.addYears(date, loanQuote.getDuration()));
+        this.startDate = AppSettings.formatter.format(date);
+        this.endDate = AppSettings.formatter.format(DateUtils.addYears(date, loanQuote.getDuration()));
         this.amortizations = new ArrayList<>();
     }
 
