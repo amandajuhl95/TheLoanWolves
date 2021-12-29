@@ -33,9 +33,9 @@ For AccountService
 docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/TheLoanWolves/AccountService/data:/h2-data" --name h2-account -d -p 9095:9092 -p 8085:8082 buildo/h2database 
 ```
 For LoggingService 
-<i>Go to: localhost:8087</i>
+<i>Go to: localhost:8089</i>
 ```
-docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/TheLoanWolves/LoggingService/data:/h2-data" --name h2-logging -d -p 9097:9092 -p 8087:8082 buildo/h2database
+docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/TheLoanWolves/LoggingService/data:/h2-data" --name h2-logging -d -p 9099:9092 -p 8089:8082 buildo/h2database
 ```
 
 #### To make docker container for Camunda, run:
