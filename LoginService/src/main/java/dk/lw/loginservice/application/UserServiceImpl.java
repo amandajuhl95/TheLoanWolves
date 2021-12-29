@@ -34,21 +34,22 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
                     LoginResponse response = LoginResponse.newBuilder().setToken(token).build();
                     responseObserver.onNext(response);
                     responseObserver.onCompleted();
-                }
-                String error = "Wrong CPR or password";
+                } else {
+                    String error = "Wrong CPR or password";
 
-                Status status = Status.INVALID_ARGUMENT.withDescription(error);
+                    Status status = Status.INVALID_ARGUMENT.withDescription(error);
+                    producer.sendLogs(AppSettings.serviceName, error, status.getCode().value());
+
+                    responseObserver.onError(status.asRuntimeException());
+                }
+            } else {
+                String error = "User with CPR: " + request.getCpr() + " not found";
+
+                Status status = Status.NOT_FOUND.withDescription(error);
                 producer.sendLogs(AppSettings.serviceName, error, status.getCode().value());
 
                 responseObserver.onError(status.asRuntimeException());
             }
-            String error = "User with CPR: " + request.getCpr() + " not found";
-
-            Status status = Status.NOT_FOUND.withDescription(error);
-            producer.sendLogs(AppSettings.serviceName, error, status.getCode().value());
-
-            responseObserver.onError(status.asRuntimeException());
-
         } catch (Exception ex) {
 
             String error = ex.getMessage();
@@ -69,13 +70,14 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
                 responseObserver.onNext(response);
                 responseObserver.onCompleted();
             }
-            String error = "User with CPR: " + request.getCpr() + " not found";
+            else {
+                String error = "User with CPR: " + request.getCpr() + " not found";
 
-            Status status = Status.NOT_FOUND.withDescription(error);
-            producer.sendLogs(AppSettings.serviceName, error, status.getCode().value());
+                Status status = Status.NOT_FOUND.withDescription(error);
+                producer.sendLogs(AppSettings.serviceName, error, status.getCode().value());
 
-            responseObserver.onError(status.asRuntimeException());
-
+                responseObserver.onError(status.asRuntimeException());
+            }
         } catch (Exception ex) {
             String error = ex.getMessage();
 
@@ -97,13 +99,14 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
                 responseObserver.onNext(response);
                 responseObserver.onCompleted();
             }
-            String error = "User with id: " + request.getId() + " not found";
+            else {
+                String error = "User with id: " + request.getId() + " not found";
 
-            Status status = Status.NOT_FOUND.withDescription(error);
-            producer.sendLogs(AppSettings.serviceName, error, status.getCode().value());
+                Status status = Status.NOT_FOUND.withDescription(error);
+                producer.sendLogs(AppSettings.serviceName, error, status.getCode().value());
 
-            responseObserver.onError(status.asRuntimeException());
-
+                responseObserver.onError(status.asRuntimeException());
+            }
         } catch (Exception ex) {
             String error = ex.getMessage();
 
@@ -136,21 +139,22 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
                     UserResponse response = createResponse(user, responseObserver);
                     responseObserver.onNext(response);
                     responseObserver.onCompleted();
-                }
-                String error = "Invalid password or CPR";
+                } else {
+                    String error = "Invalid password or CPR";
 
-                Status status = Status.INVALID_ARGUMENT.withDescription(error);
+                    Status status = Status.INVALID_ARGUMENT.withDescription(error);
+                    producer.sendLogs(AppSettings.serviceName, error, status.getCode().value());
+
+                    responseObserver.onError(status.asRuntimeException());
+                }
+            } else {
+                String error = "User with CPR: " + request.getCpr() + " not found";
+
+                Status status = Status.NOT_FOUND.withDescription(error);
                 producer.sendLogs(AppSettings.serviceName, error, status.getCode().value());
 
                 responseObserver.onError(status.asRuntimeException());
             }
-            String error = "User with CPR: " + request.getCpr() + " not found";
-
-            Status status = Status.NOT_FOUND.withDescription(error);
-            producer.sendLogs(AppSettings.serviceName, error, status.getCode().value());
-
-            responseObserver.onError(status.asRuntimeException());
-
         } catch (Exception ex) {
             String error = ex.getMessage();
 
