@@ -14,16 +14,15 @@ public class MoneyConvert {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://currency-converter5.p.rapidapi.com/currency/convert?format=json&from=SEK&to=DKK&amount=1")
+                .url(AppSettings.currencyConverterURL)
                 .get()
-                .addHeader("x-rapidapi-host", "currency-converter5.p.rapidapi.com")
-                .addHeader("x-rapidapi-key", "a6bcbb2743msh98c0fb0dd9ffeacp1f9c4cjsnac688d386300")
+                .addHeader("x-rapidapi-host", AppSettings.currencyConverterHost)
+                .addHeader("x-rapidapi-key", AppSettings.currencyConverterKey)
                 .build();
 
         Response response = client.newCall(request).execute();
         String jsonData = response.body().string();
         JSONObject data = new JSONObject(jsonData);
-        //System.out.println(Double.parseDouble(data.getJSONObject("rates").getJSONObject("DKK").getString("rate")));
         return Double.parseDouble(data.getJSONObject("rates").getJSONObject("DKK").getString("rate"));
     }
 }

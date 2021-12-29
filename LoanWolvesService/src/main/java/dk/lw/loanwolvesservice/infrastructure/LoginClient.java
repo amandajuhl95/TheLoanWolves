@@ -1,5 +1,6 @@
 package dk.lw.loanwolvesservice.infrastructure;
 
+import dk.lw.loanwolvesservice.AppSettings;
 import dk.lw.loanwolvesservice.DTO.login.CreateUserDTO;
 import dk.lw.loanwolvesservice.DTO.login.LoginDTO;
 import dk.lw.loanwolvesservice.DTO.login.UpdateUserDTO;
@@ -15,7 +16,7 @@ import java.util.UUID;
     private UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub;
 
     public LoginClient() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090)
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(AppSettings.loginHost, AppSettings.loginPort)
                 .usePlaintext().build();
         userServiceBlockingStub = UserServiceGrpc.newBlockingStub(channel);
     }

@@ -13,6 +13,8 @@ public class AppSettings {
 
     public static final String accountServiceURL = "http://localhost:8060/account/";
     public static final String loanServiceURL = "http://localhost:8091/loan/";
+    public static final String loginHost = "localhost";
+    public static final int loginPort = 9090;
 
     public static final Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret),
             SignatureAlgorithm.HS256.getJcaName());

@@ -2,7 +2,7 @@ package dk.lw.loanwolvesservice.infrastructure;
 
 import dk.lw.loanwolvesservice.AppSettings;
 import dk.lw.loanwolvesservice.DTO.loan.LoanRequestDTO;
-import dk.lw.loanwolvesservice.DTO.loan.LoanTransactionDTO;
+import dk.lw.loanwolvesservice.DTO.loan.AmortizationDTO;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class LoanClient extends RestClient {
         return HttpStatus.valueOf(responseCode);
     }
 
-    public HttpStatus loanAmortization(UUID loanId, LoanTransactionDTO transaction) throws IOException {
+    public HttpStatus loanAmortization(UUID loanId, AmortizationDTO transaction) throws IOException {
         String url = "amortization/"+ loanId;
         int responseCode = POST(url, gson.toJson(transaction)).code();
 

@@ -1,10 +1,13 @@
 package dk.lw.loanwolvesservice.application;
 
 import dk.lw.loanwolvesservice.AppSettings;
+import dk.lw.loanwolvesservice.DTO.account.AccountDTO;
+import dk.lw.loanwolvesservice.DTO.account.TransactionDTO;
+import dk.lw.loanwolvesservice.DTO.loan.AmortizationDTO;
 import dk.lw.loanwolvesservice.DTO.loan.LoanRequestDTO;
-import dk.lw.loanwolvesservice.DTO.loan.LoanTransactionDTO;
 import dk.lw.loanwolvesservice.DTO.login.UserDTO;
 import dk.lw.loanwolvesservice.Utils;
+import dk.lw.loanwolvesservice.domain.TransactionType;
 import dk.lw.loanwolvesservice.errorhandling.LoanException;
 import dk.lw.loanwolvesservice.errorhandling.UnauthorizedException;
 import dk.lw.loanwolvesservice.infrastructure.AccountClient;
@@ -47,10 +50,25 @@ public class LoanController {
     }
 
     @PostMapping("/loan/amortization/{loanId}")
-    public HttpStatus loanAmortization (@PathVariable UUID loanId, @RequestBody @Valid LoanTransactionDTO transaction, @RequestHeader("Session-Token") String token) throws UnauthorizedException, IOException {
+    public HttpStatus loanAmortization (@PathVariable UUID userId, @PathVariable UUID loanId, @PathVariable UUID accountId, @RequestBody @Valid TransactionDTO transaction, @RequestHeader("Session-Token") String token) throws UnauthorizedException, IOException, LoanException {
         if(Utils.validToken(token)) {
-            HttpStatus statusCode = loanClient.loanAmortization(loanId, transaction);
-            return statusCode;
+            if(Utils.authorize(token, userId))
+            {
+                if(transaction.getType().equals(TransactionType.WITHDRAWAL)) {
+                    AccountDTO accountDTO = accountClient.transaction(userId, accountId, transaction);
+                    int transactionsSize = accountDTO.getTransactions().size();
+
+                    AmortizationDTO amortizationDTO = new AmortizationDTO(accountDTO.getTransactions().get(transactionsSize - 1));
+                    HttpStatus statusCode = loanClient.loanAmortization(loanId, amortizationDTO);
+                    return statusCode;
+                }
+                String error = "Loan amortization must be a withdrawal";
+                producer.sendLogs(AppSettings.serviceName, error, HttpStatus.BAD_REQUEST.value());
+                throw new LoanException(error);
+            }
+            String error = "Unauthorized for this action";
+            producer.sendLogs(AppSettings.serviceName, error, HttpStatus.UNAUTHORIZED.value());
+            throw new UnauthorizedException(error);
         }
         String error = "Login expired";
         producer.sendLogs(AppSettings.serviceName, error, HttpStatus.UNAUTHORIZED.value());

@@ -18,7 +18,6 @@ public class AppSettings {
             SignatureAlgorithm.HS256.getJcaName());
 
     public static final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-
     public static final SimpleDateFormat cprFormatter = new SimpleDateFormat("ddMMyy");
 
     public static final String serviceName = "LoginService";
