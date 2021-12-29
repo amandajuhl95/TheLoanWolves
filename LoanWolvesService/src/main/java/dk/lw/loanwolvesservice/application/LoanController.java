@@ -7,6 +7,7 @@ import dk.lw.loanwolvesservice.DTO.loan.AmortizationDTO;
 import dk.lw.loanwolvesservice.DTO.loan.LoanRequestDTO;
 import dk.lw.loanwolvesservice.DTO.login.UserDTO;
 import dk.lw.loanwolvesservice.Utils;
+import dk.lw.loanwolvesservice.domain.LoanQuoteStatus;
 import dk.lw.loanwolvesservice.domain.TransactionType;
 import dk.lw.loanwolvesservice.errorhandling.LoanException;
 import dk.lw.loanwolvesservice.errorhandling.UnauthorizedException;
@@ -32,12 +33,12 @@ public class LoanController {
     @Autowired
     private LoggingProducer producer;
 
-    @PostMapping("/loan/accept/{userId}/{loanQuoteId}")
-    public HttpStatus acceptLoan (@PathVariable UUID userId, @PathVariable UUID loanQuoteId, @RequestHeader("Session-Token") String token) throws UnauthorizedException, IOException {
+    @PostMapping("/loan/decision/{status}/{userId}/{loanQuoteId}")
+    public HttpStatus loanDecision (@PathVariable LoanQuoteStatus status, @PathVariable UUID userId, @PathVariable UUID loanQuoteId, @RequestHeader("Session-Token") String token) throws UnauthorizedException, IOException {
         if(Utils.validToken(token)) {
             if(Utils.authorize(token, userId))
             {
-                HttpStatus statusCode = loanClient.acceptLoan(userId, loanQuoteId);
+                HttpStatus statusCode = loanClient.loanDecision(userId, loanQuoteId, status);
                 return statusCode;
             }
             String error = "Unauthorized for this action";

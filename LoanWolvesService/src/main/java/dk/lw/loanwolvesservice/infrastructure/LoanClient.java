@@ -3,6 +3,7 @@ package dk.lw.loanwolvesservice.infrastructure;
 import dk.lw.loanwolvesservice.AppSettings;
 import dk.lw.loanwolvesservice.DTO.loan.LoanRequestDTO;
 import dk.lw.loanwolvesservice.DTO.loan.AmortizationDTO;
+import dk.lw.loanwolvesservice.domain.LoanQuoteStatus;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
@@ -14,8 +15,8 @@ public class LoanClient extends RestClient {
         this.baseUrl = AppSettings.loanServiceURL;
     }
 
-    public HttpStatus acceptLoan(UUID userId, UUID loanQuoteId) throws IOException {
-        String url = "accept/"+ userId + "/" + loanQuoteId;
+    public HttpStatus loanDecision(UUID userId, UUID loanQuoteId, LoanQuoteStatus status) throws IOException {
+        String url = "decision/"+ status + "/" + userId + "/" + loanQuoteId;
         int responseCode = POST(url, "").code();
 
         return HttpStatus.valueOf(responseCode);

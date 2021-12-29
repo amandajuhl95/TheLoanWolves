@@ -1,5 +1,6 @@
 package dk.lw.loanservice.application;
 
+import dk.lw.loanservice.DTO.LoanQuoteStatus;
 import dk.lw.loanservice.DTO.LoanRequestDTO;
 import dk.lw.loanservice.DTO.TransactionDTO;
 import dk.lw.loanservice.infrastructure.LoanQuoteClient;
@@ -15,9 +16,9 @@ public class Controller {
     @Autowired
     private Producer producer;
 
-    @PostMapping("/accept/{userId}/{loanQuoteId}")
-    public void acceptLoan(@PathVariable UUID userId, @PathVariable UUID loanQuoteId) {
-        producer.sendLoan(userId, loanQuoteId);
+    @PostMapping("/decision/{status}/{userId}/{loanQuoteId}")
+    public void loanDecision(@PathVariable LoanQuoteStatus status, @PathVariable UUID userId, @PathVariable UUID loanQuoteId) {
+        producer.sendLoan(status,userId, loanQuoteId);
     }
 
     @PostMapping("/amortization/{loanId}")

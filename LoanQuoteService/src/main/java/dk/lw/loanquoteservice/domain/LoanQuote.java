@@ -20,6 +20,7 @@ public class LoanQuote {
     private String cpr;
     private double amount, fee, interestRate;
     private int duration;
+    private Status status;
 
     public LoanQuote(LoanQuoteDTO loanQuoteDTO) {
         this.id = loanQuoteDTO.getId();
@@ -29,5 +30,6 @@ public class LoanQuote {
         this.fee = loanQuoteDTO.getFee();
         this.interestRate = loanQuoteDTO.getInterestRate();
         this.duration = loanQuoteDTO.getDuration();
+        this.status = Status.PENDING;
     }
 }

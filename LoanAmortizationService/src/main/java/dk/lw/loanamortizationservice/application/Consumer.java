@@ -7,6 +7,7 @@ import dk.lw.loanamortizationservice.DTO.LoanDTO;
 import dk.lw.loanamortizationservice.domain.Amortization;
 import dk.lw.loanamortizationservice.domain.Loan;
 import dk.lw.loanamortizationservice.domain.LoanQuote;
+import dk.lw.loanamortizationservice.domain.Status;
 import dk.lw.loanamortizationservice.infrastructure.LoanQuoteRepository;
 import dk.lw.loanamortizationservice.infrastructure.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class Consumer {
         }
     }
 
-    @KafkaListener(topics = "loan-accept", groupId = "loan")
+    @KafkaListener(topics = "loan-decision", groupId = "loan")
     public void consumeLoan(String request)
     {
         LoanAdmissionDTO loanAdmissionDTO = gson.fromJson(request, LoanAdmissionDTO.class);
@@ -55,13 +56,19 @@ public class Consumer {
         if(quote.isPresent()) {
             LoanQuote loanquote = quote.get();
 
-            if(loanquote.getUserId().equals(loanAdmissionDTO.getUserId())) {
+            if(loanquote.getUserId().equals(loanAdmissionDTO.getUserId()) && loanquote.getStatus().equals(Status.PENDING)) {
 
-                Loan loan = new Loan(loanquote);
-                loan = loanRepository.save(loan);
+                if(loanAdmissionDTO.getStatus().equals(Status.ACCEPTED)) {
+                    Loan loan = new Loan(loanquote);
+                    loan = loanRepository.save(loan);
 
-                LoanDTO loanDTO = new LoanDTO(loan);
-                producer.transferLoan(loanDTO);
+                    LoanDTO loanDTO = new LoanDTO(loan);
+                    producer.transferLoan(loanDTO);
+                }
+                else if(loanAdmissionDTO.getStatus().equals(Status.DECLINED)) {
+                    loanquote.setStatus(Status.DECLINED);
+                    loanQuoteRepository.save(loanquote);
+                }
             }
         }
     }

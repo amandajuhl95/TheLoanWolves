@@ -20,5 +20,6 @@ public class LoanQuote {
     private UUID userId;
     private double amount, fee, interestRate;
     private int duration;
+    private Status status;
 
 }

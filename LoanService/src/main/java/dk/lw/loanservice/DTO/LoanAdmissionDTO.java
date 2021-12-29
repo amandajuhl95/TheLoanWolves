@@ -12,5 +12,6 @@ import java.util.UUID;
 public class LoanAdmissionDTO {
 
     private UUID userId, loanQuoteId;
+    private LoanQuoteStatus status;
 
 }
