@@ -2,6 +2,8 @@ package dk.lw.loantypesgateway;
 
 public class AppSettings {
 
+    public static final String serviceName  = "LoanTypesGateway";
+
     public static final String source  = "loantypes/se_loantypes/";
     public static final String destination  = "loantypes/dk_loantypes/";
 

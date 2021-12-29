@@ -1,14 +1,17 @@
 package dk.lw.loantypesgateway;
 
+import dk.lw.loantypesgateway.logging.LoggingProducer;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 
 public class CurrencyConverter {
+
+    LoggingProducer producer = new LoggingProducer();
 
     public double convert() throws IOException {
         try {
@@ -27,6 +30,7 @@ public class CurrencyConverter {
             return Double.parseDouble(data.getJSONObject("rates").getJSONObject("DKK").getString("rate"));
 
         } catch (Exception e) {
+            producer.sendLogs(AppSettings.serviceName, e.getMessage(), HttpStatus.NOT_ACCEPTABLE.value());
             throw new IOException(e);
         }
     }
