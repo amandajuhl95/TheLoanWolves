@@ -120,9 +120,9 @@ type = SAVINGS, SALARY, PAYMENT or DEBIT
 
 10. Accept loan[POST]: /loan/accept/{userId}/{loanQuoteId}
 
-11. Make amortization[POST]: /loan/amortization/{loanId}
+11. Make amortization[POST]: /loan/amortization/{userId}/{accountId}/{loanId}
 ```
-@RequestBody {"transactionId":UUID, "amount":Double} 
+@RequestBody {"amount":Double. "type":type} 
 ```
 
 #### Camunda Diagram
