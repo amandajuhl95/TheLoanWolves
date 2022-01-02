@@ -59,9 +59,6 @@ docker run -d --name camunda -p 8080:8080 camunda/camunda-bpm-platform:latest
  
 #### To make docker container for Kafka, run in the root of the downloaded project:
 ```
-curl -sSL https://raw.githubusercontent.com/bitnami/bitnami-docker-kafka/master/docker-compose.yml > docker-compose.yml
-```
-```
 docker-compose up -d
 ```
 
