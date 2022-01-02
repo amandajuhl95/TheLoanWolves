@@ -54,7 +54,7 @@ docker run -d --name camunda -p 8080:8080 camunda/camunda-bpm-platform:latest
 
 2. Click on "Process Definitions" 
 3. Click on "SI_exam_Loan_picker_process"
-4. This BPMN-diagram where you can see when processes is running and how far a task are in the flow.
+4. The BPMN-diagram shows that processes are running and how far a task is in the flow.
 5. Download Camunda Modeler.
  
 #### To make docker container for Kafka, run in the root of the downloaded project:
@@ -151,4 +151,16 @@ Finally, all accepted requests are saved. This is done by sending the loan reque
 * Loan types are saved locally and updated daily.
 
 ![](https://github.com/amalielandt/TheLoanWolves/blob/main/diagrams/new_setup.PNG)
+
+#### Documentation of changes after hand-in
+
+We have not added new functionalities to the system only improved performanced by changing the flow of the system, this includes:
+
+1. Logging from all services saved in H2 database through our LoggerService, so we can keep track of our exceptions/errors.
+2. Changed @pathvariables and @requestbody of endpoint no. 8. Before the entire user should be given, but as we already have the user saved in our H2 database, we only need to give the user-id.
+3. Added an Enum with ACCEPTED, DECLINED or PENDING that is used to accept or decline a loan. We have therefore changed the @pathvariables of endpoint no. 10.
+4. Changed port number of the h2 database of LoggingService.
+
+
+
 
