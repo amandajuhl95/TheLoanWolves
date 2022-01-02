@@ -30,7 +30,7 @@ public class LoanConsumer {
     public void transferLoan(String request)
     {
         LoanDTO loanDTO = gson.fromJson(request, LoanDTO.class);
-        Account account = accountRepository.findByIdAndType(loanDTO.getUserId(), AccountType.DEBIT);
+        Account account = accountRepository.findByUserIdAndType(loanDTO.getUserId(), AccountType.DEBIT);
 
         if(account == null)
         {

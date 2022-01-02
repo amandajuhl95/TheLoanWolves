@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AccountRepository extends JpaRepository<Account, UUID> {
-    Account findByIdAndType(UUID id, AccountType type);
+    Account findByUserIdAndType(UUID id, AccountType type);
     List<Account> findByUserId(UUID userId);
 }

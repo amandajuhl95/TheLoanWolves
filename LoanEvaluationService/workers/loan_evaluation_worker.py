@@ -10,6 +10,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json
 from kafka import KafkaProducer
+import uuid
 
 default_config = {
     "maxTasks": 1,
@@ -89,6 +90,7 @@ def send_email(task: ExternalTask) -> TaskResult:
     Fee = task.get_variable("Fee")
     InterestRate = task.get_variable("InterestRate")
     Duration = task.get_variable("Duration")
+    id = str(uuid.uuid4())
 
     if Liable == "True":
 
@@ -98,7 +100,7 @@ def send_email(task: ExternalTask) -> TaskResult:
 
         mail_content = "".join(mail_content)
         Subject = "Your request has been accepted"
-        mail_content = mail_content.format(today,FullName, Address, Amount, Duration,Amount, InterestRate, Fee)
+        mail_content = mail_content.format(id, today,FullName, Address, Amount, Duration,Amount, InterestRate, Fee)
 
     else:
         Subject = "Your request has been declined"
@@ -139,7 +141,7 @@ def send_email(task: ExternalTask) -> TaskResult:
         raise Exception("Could not connect to the mail theloanwolvesdk@gmail.com. See full error: ", e.smtp_error)
 
 
-    return task.complete({ "FullName": FullName, "Email":Email, "CPR":CPR, "UserId":UserId, "Amount": float(Amount), "Fee": float(Fee), "InterestRate": float(InterestRate), "Duration":int(Duration)})
+    return task.complete({ "FullName": FullName, "Email":Email, "CPR":CPR, "UserId":UserId, "Amount": float(Amount), "Fee": float(Fee), "InterestRate": float(InterestRate), "Duration":int(Duration),"id":id})
 
 def save_loan_quote(task: ExternalTask) -> TaskResult:
     
@@ -149,12 +151,13 @@ def save_loan_quote(task: ExternalTask) -> TaskResult:
     Fee = task.get_variable("Fee")
     InterestRate = task.get_variable("InterestRate")
     Duration = task.get_variable("Duration")
+    id = task.get_variable("id")
 
     print(Amount,CPR,UserId,Fee,InterestRate,Duration)
 
     try:
         producer = KafkaProducer(value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-        producer.send('save-loan-quote', {'amount': Amount,'cpr':CPR ,'userId':UserId ,'fee':Fee ,'interestRate':InterestRate ,'duration': Duration})
+        producer.send('save-loan-quote', {'amount': Amount,'cpr':CPR ,'userId':UserId ,'fee':Fee ,'interestRate':InterestRate ,'duration': Duration, 'id':id})
         return task.complete()
 
     except Exception  as e:
