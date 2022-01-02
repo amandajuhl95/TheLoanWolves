@@ -1,16 +1,8 @@
-version: '3'
+version: '3'services:  zookeeper:    image: wurstmeister/zookeeper    container_name: zookeeper    ports:      - "2181:2181"  kafka:    image: wurstmeister/kafka    container_name: kafka    ports:      - "9092:9092"    environment:      KAFKA_ADVERTISED_HOST_NAME: localhost      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181    h2-user:    image: buildo/h2database     container_name: h2-user    ports:      - "9091:9092"      - "8081:8082"
 
-services:
-  zookeeper:
-    image: wurstmeister/zookeeper
-    container_name: zookeeper
-    ports:
-      - "2181:2181"
-  kafka:
-    image: wurstmeister/kafka
-    container_name: kafka
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  h2-account:    image: buildo/h2database     container_name: h2-account    ports:      - "9095:9092"      - "8085:8082"    
+  h2-loan:    image: buildo/h2database     container_name: h2-loan    ports:      - "9093:9092"      - "8083:8082"  
+  H2-logging:    image: buildo/h2database     container_name: h2-logging    ports:      - "9099:9092"      - "8089:8082"   
+
+
+
