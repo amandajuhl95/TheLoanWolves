@@ -73,6 +73,9 @@ public class Consumer {
 
                         LoanDTO loanDTO = new LoanDTO(loan);
                         producer.transferLoan(loanDTO);
+
+                        loanquote.setStatus(Status.ACCEPTED);
+                        loanQuoteRepository.save(loanquote);
                     }
                     else if(loanAdmissionDTO.getStatus().equals(Status.DECLINED)) {
                         loanquote.setStatus(Status.DECLINED);
