@@ -6,10 +6,7 @@ import lombok.Data;
 import org.apache.catalina.filters.RemoteIpFilter;
 
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +20,7 @@ public class Account {
     private double balance;
     private AccountType type;
 
-    @OneToMany(mappedBy = "account", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "account", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Transaction> transactions = new ArrayList<>();
 
     public Account(UUID userId, AccountType type) {
