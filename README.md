@@ -159,11 +159,12 @@ We have not added new functionalities to the system only improved performanced b
 1. Logging from all services saved in H2 database through our LoggerService, so we can keep track of our exceptions/errors.
 2. Changed @pathvariables and @requestbody of endpoint no. 8. Before the entire user should be given, but as we already have the user saved in our H2 database, we only need to give the user-id.
 3. Added an Enum with ACCEPTED, DECLINED or PENDING that is used to accept or decline a loan. We have therefore changed the @pathvariables of endpoint no. 10.
-4. Changed port number of the h2 database of LoggingService.
-5. Input validation for all endpoints at LoanWolvesService
-6. Optimized errorhandling on all services
-7. Optimized docker-compose file
-8. Sender email changes
+4. Endpoint no. 11 takes both amount and transaction type as body, and account id in path, so that both the transaction from the account and the amortization of the loan is executed
+5. Changed port number of the h2 database of LoggingService.
+6. Input validation for all endpoints at LoanWolvesService
+7. Optimized errorhandling on all services
+8. Optimized docker-compose file
+9. Sender email changes
 
 
 
