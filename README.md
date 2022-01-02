@@ -163,6 +163,7 @@ We have not added new functionalities to the system only improved performanced b
 5. Input validation for all endpoints at LoanWolvesService
 6. Optimized errorhandling on all services
 7. Optimized docker-compose file
+8. Sender email changes
 
 
 
