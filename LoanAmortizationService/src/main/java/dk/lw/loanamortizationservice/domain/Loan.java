@@ -24,8 +24,8 @@ public class Loan {
     private String startDate, endDate;
     private double amount, principal, interestRate;
 
-    @OneToMany(mappedBy = "loan", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<Amortization> amortizations;
+    @OneToMany(mappedBy = "loan", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch=FetchType.EAGER)
+    private List<Amortization> amortizations = new ArrayList<>();
 
     public Loan(LoanQuote loanQuote) {
         this.id = UUID.randomUUID();
@@ -36,11 +36,25 @@ public class Loan {
         this.principal = loanQuote.getAmount() + loanQuote.getFee();
         this.startDate = AppSettings.formatter.format(date);
         this.endDate = AppSettings.formatter.format(DateUtils.addYears(date, loanQuote.getDuration()));
-        this.amortizations = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", amount=" + amount +
+                ", principal=" + principal +
+                ", interestRate=" + interestRate +
+                '}';
     }
 
     public void addAmortization(Amortization amortization) {
-        this.amortizations.add(amortization);
         this.principal = principal - amortization.getPayOffAmount();
+        this.amortizations.add(amortization);
     }
+
+
 }

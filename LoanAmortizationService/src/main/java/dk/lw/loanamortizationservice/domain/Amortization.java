@@ -29,8 +29,8 @@ public class Amortization {
         this.id = UUID.randomUUID();
         this.transactionId = amortizationDTO.getTransactionId();
         this.loan = loan;
-        this.payment = amortizationDTO.getPayment();
-        this.payOffAmount = calcActualPayment(amortizationDTO.getPayment());
+        this.payment = amortizationDTO.getAmount();
+        this.payOffAmount = calcActualPayment(amortizationDTO.getAmount());
         this.date = AppSettings.formatter.format(new Date());
     }
 

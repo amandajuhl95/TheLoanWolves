@@ -13,6 +13,6 @@ import java.util.UUID;
 public class AmortizationDTO {
 
     private UUID loanId, transactionId;
-    private double payment;
+    private double amount;
 
 }
