@@ -15,30 +15,22 @@ Loan Wolves is a swedish cooperative bank. Seated in Göteborg. They would like 
 
 ![](https://github.com/amalielandt/TheLoanWolves/blob/main/diagrams/legacy_setup.PNG)
 
-#### To make docker container for H2 database with volume in project folder run:
+#### Setup the system 
 
-For LoginService 
-<i>Go to: localhost:8081</i>
+1. Download the project 
+2. In the project root, please run:
 ```
-docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/TheLoanWolves/LoginService/data:/h2-data" --name h2-user -d -p 9091:9092 -p 8081:8082 buildo/h2database 
+docker-compose up -d
 ```
-For LoanAmortizationService and LoanQuoteService 
-<i>Go to: localhost:8083</i>
-```
-docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/TheLoanWolves/LoanAmortizationService/data:/h2-data" --name h2-loan -d -p 9093:9092 -p 8083:8082 buildo/h2database
-```
-For AccountService 
-<i>Go to: localhost:8085</i>
-```
-docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/TheLoanWolves/AccountService/data:/h2-data" --name h2-account -d -p 9095:9092 -p 8085:8082 buildo/h2database 
-```
-For LoggingService 
-<i>Go to: localhost:8089</i>
-```
-docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/TheLoanWolves/LoggingService/data:/h2-data" --name h2-logging -d -p 9099:9092 -p 8089:8082 buildo/h2database
-```
+3. Check in Docker that a container with h2 databases and kafka is running.
+4. To open the databases, go to:
+- localhost:8081 (to see user tables)
+- localhost:8083 (to see loan tables)
+- localhost:8085 (to see account tables)
+- localhost:8089 (to see log table)
 
-#### To make docker container for Camunda, run:
+5. Open OffSet Explorer 2 and add a connection to the created docker container.
+6. Make a docker container for Camunda, please run:
 ```
 docker pull camunda/camunda-bpm-platform:latest
 ```
@@ -46,24 +38,19 @@ docker pull camunda/camunda-bpm-platform:latest
 docker run -d --name camunda -p 8080:8080 camunda/camunda-bpm-platform:latest
 ```
  
-1. Go to [Camunda Dashboard](http://localhost:8080/camunda/app/cockpit/default/#/dashboard) to check tha Camunda is running. 
+8. Download Camunda Modeler.
+9. In the menu tab click "file". Click "open file" and choose "diagram_1.bpmn", which can be found here: TheLoanWolves/LoanEvalutionService/Camunda/diagrams/
+10. Deploy program by clicking: <img width="31" alt="Skærmbillede 2022-01-03 kl  11 59 21" src="https://user-images.githubusercontent.com/47500265/147923238-e0006a03-1c73-4d7a-8e1b-8497d4f086e7.png">
 
-##### Login information
-- Username = demo
-- Password = demo
+11. Give it a name, and select the two files, which can be found here: TheLoanWolves/LoanEvalutionService/Camunda/forms/
 
-2. Click on "Process Definitions" 
-3. Click on "SI_exam_Loan_picker_process"
-4. The BPMN-diagram shows that processes are running and how far a task is in the flow.
-5. Download Camunda Modeler.
- 
-#### To make docker container for Kafka, run in the root of the downloaded project:
-```
-docker-compose up -d
-```
+<img width="641" alt="Skærmbillede 2022-01-03 kl  11 58 53" src="https://user-images.githubusercontent.com/47500265/147923191-4337b054-285e-4306-98cc-77b26b741228.png">
 
-1. Check in Docker that a container with a zookeeper and kafka is running. 
-2. Next open OffSet Explorer 2 and add a connection to the created docker container.
+12. Go to [Camunda Dashboard](http://localhost:8080/camunda/app/cockpit/default/#/dashboard).
+13. Login using <b> demo </b> for both username and password
+14. Click on "Process Definitions" 
+15. Click on "SI_exam_Loan_picker_process"
+16. The BPMN-diagram shows that processes are running and how far a task is in the flow.
 
 #### Endpoints
 
