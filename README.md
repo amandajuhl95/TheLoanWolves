@@ -7,11 +7,25 @@ Loan Wolves is a swedish cooperative bank. Seated in Göteborg. They would like 
 
 #### Legacy System
 
-* More difficult to develop new functionality given it’s a monolithic setup.
-* It is not possible to scale the most used parts of the system, it's only possible to scale the entire system.
-* Inconsistent architecture with only one microservice.
+The legacy system is built upon a 3-layer architecture. With a Presentation, business, and Data layer. It is used to handle loan quote requests, establish loans and amortization of loans. The system also handles accounts and transactions. To use the system, login is required, either as an employee or a customer. Whereas an employee has access to all functionalities, customers only have access to their own accounts and loans and can only request a loan quote on their own behalf.
 
-* The CSV file(s) and the internal conversion service will be used in our new system.
+All loan quotes offered to customers is saved in the database for later acceptance or rejection by the customer. When a loan quote is accepted, the loan is established, and the customer can amortize the loan. This is done by transferring money from the customer’s account. For each transfer the transaction is saved. For The Loan Wolves who are expanding, the amount of data stored will quickly increase, and can cause performance issues, due to the legacy system only using a single database for all data.
+
+As of now the loan quote processing is very dependent on human interference since the system doesn’t really support automation. Therefore, the evaluation of the customer’s request is done manually by an employee. This means that when a customer requests a loan, their information and request is looked over by the employee, who decides if the customer is liable for the loan – based on certain criteria. If so, the employee will create a loan quote in the system based on the loan types and send an email with the loan quote to the customer. For the new system this process should be automated, to improve performance and customer satisfaction. 
+
+The monolith connects to 3 components 
+•	The currency converter, used to convert the requested loan amount to Swedish crones from other currency
+•	The database used for storing user, account, and loan information
+•	The CSV file containing the loan types that The Loan Wolves offers.
+Both the CSV file and the currency converter should be used in the new system
+
+Given the monolithic setup of the legacy system, other difficulties apply, such as:
+•	Developing new functionality, causing inconsistent architecture with additional microservice.
+•	Scaling the most used components of the system, without having to scale the entire system. This can affect the systems availability and limit the implementation of load balancing.
+•	Limited use of different programming languages, due to the underlying framework
+
+![image](https://user-images.githubusercontent.com/44894156/147925154-2a26ce54-ac0e-4a87-bd4e-f81bc70c761a.png)
+
 
 ![](https://github.com/amalielandt/TheLoanWolves/blob/main/diagrams/legacy_setup.PNG)
 
