@@ -155,7 +155,7 @@ Finally, all accepted requests are saved. This is done by sending the loan reque
 We have not added new functionalities to the system only improved performanced by changing the flow of the system, this includes:
 
 1. Logging from all services saved in H2 database through our LoggerService, so we can keep track of our exceptions/errors.
-2. Changed @pathvariables and @requestbody of endpoint no. 8. Before the entire user should be given, but as we already have the user saved in our H2 database, we only need to give the user-id.
+2. Changed @pathvariables and @requestbody of endpoint no. 9. Before the entire user should be given, but as we already have the user saved in our H2 database, we only need to give the user-id.
 3. Added an Enum with ACCEPTED, DECLINED or PENDING that is used to accept or decline a loan. We have therefore changed the @pathvariables of endpoint no. 10.
 4. Endpoint no. 11 takes both amount and transaction type as body, and account id in path, so that both the transaction from the account and the amortization of the loan is executed
 5. Changed port number of the h2 database of LoggingService.
