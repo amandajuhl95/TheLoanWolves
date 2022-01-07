@@ -41,8 +41,8 @@ def liability(task: ExternalTask) -> TaskResult:
 
     ## Loan type information
     loan_types = pd.read_csv("../../LoanTypesGateway/loantypes/dk_loantypes/loantypes.csv", delimiter=";")
-    loan_types['min_limit'] = loan_types['min_limit'].astype('int')
-    loan_types['max_limit'] = loan_types['max_limit'].astype('int')
+    loan_types['min_limit'] = loan_types['min_limit'].astype('float')
+    loan_types['max_limit'] = loan_types['max_limit'].astype('float')
     loan_types['interest_rate'] = loan_types['interest_rate'].astype('float') 
     loan_types['Duration'] = loan_types['Duration'].astype('int') 
     
@@ -114,11 +114,11 @@ def send_email(task: ExternalTask) -> TaskResult:
 
     try:
         #The mail addresses and password
-        sender = "theloanwolvesdk@gmail.com"
+        sender = "SOME MAIL"
         reciver = Email
 
         sender_address = sender
-        sender_pass = 'chokobanan1!'
+        sender_pass = 'PASSWORD'
         receiver_address = reciver
         #Setup the MIME
         message = MIMEMultipart()
